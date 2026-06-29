@@ -1,0 +1,19 @@
+enum UserRole {
+  USER
+}
+
+enum NotificationType {
+  FRIEND_REQUEST
+  FRIEND_ACCEPT
+  VIDEO_LOVE
+  STORY_TAG
+  VIDEO_REPORT
+  VIDEO_TAG
+  SUBSCRIPTION
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+}
