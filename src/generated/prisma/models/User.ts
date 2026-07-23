@@ -29,10 +29,8 @@ export type UserMinAggregateOutputType = {
   fullName: string | null
   email: string | null
   emailVerified: boolean | null
-  bio: string | null
   profileImage: string | null
-  fcmToken: string | null
-  role: $Enums.UserRole | null
+  role: $Enums.Role | null
   isActive: boolean | null
   isVerified: boolean | null
   createdAt: Date | null
@@ -44,10 +42,8 @@ export type UserMaxAggregateOutputType = {
   fullName: string | null
   email: string | null
   emailVerified: boolean | null
-  bio: string | null
   profileImage: string | null
-  fcmToken: string | null
-  role: $Enums.UserRole | null
+  role: $Enums.Role | null
   isActive: boolean | null
   isVerified: boolean | null
   createdAt: Date | null
@@ -59,9 +55,7 @@ export type UserCountAggregateOutputType = {
   fullName: number
   email: number
   emailVerified: number
-  bio: number
   profileImage: number
-  fcmToken: number
   role: number
   isActive: number
   isVerified: number
@@ -76,9 +70,7 @@ export type UserMinAggregateInputType = {
   fullName?: true
   email?: true
   emailVerified?: true
-  bio?: true
   profileImage?: true
-  fcmToken?: true
   role?: true
   isActive?: true
   isVerified?: true
@@ -91,9 +83,7 @@ export type UserMaxAggregateInputType = {
   fullName?: true
   email?: true
   emailVerified?: true
-  bio?: true
   profileImage?: true
-  fcmToken?: true
   role?: true
   isActive?: true
   isVerified?: true
@@ -106,9 +96,7 @@ export type UserCountAggregateInputType = {
   fullName?: true
   email?: true
   emailVerified?: true
-  bio?: true
   profileImage?: true
-  fcmToken?: true
   role?: true
   isActive?: true
   isVerified?: true
@@ -194,10 +182,8 @@ export type UserGroupByOutputType = {
   fullName: string | null
   email: string
   emailVerified: boolean
-  bio: string | null
   profileImage: string | null
-  fcmToken: string | null
-  role: $Enums.UserRole
+  role: $Enums.Role
   isActive: boolean
   isVerified: boolean
   createdAt: Date
@@ -230,18 +216,26 @@ export type UserWhereInput = {
   fullName?: Prisma.StringNullableFilter<"User"> | string | null
   email?: Prisma.StringFilter<"User"> | string
   emailVerified?: Prisma.BoolFilter<"User"> | boolean
-  bio?: Prisma.StringNullableFilter<"User"> | string | null
   profileImage?: Prisma.StringNullableFilter<"User"> | string | null
-  fcmToken?: Prisma.StringNullableFilter<"User"> | string | null
-  role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
+  role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
   isActive?: Prisma.BoolFilter<"User"> | boolean
   isVerified?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   sessions?: Prisma.SessionListRelationFilter
   accounts?: Prisma.AccountListRelationFilter
-  sentNotifications?: Prisma.NotificationListRelationFilter
-  receivedNotifications?: Prisma.NotificationListRelationFilter
+  ownedBusinesses?: Prisma.BusinessListRelationFilter
+  staffRoles?: Prisma.BusinessStaffListRelationFilter
+  sentMessages?: Prisma.ChatMessageListRelationFilter
+  memberProfile?: Prisma.XOR<Prisma.MemberProfileNullableScalarRelationFilter, Prisma.MemberProfileWhereInput> | null
+  trainerProfile?: Prisma.XOR<Prisma.TrainerProfileNullableScalarRelationFilter, Prisma.TrainerProfileWhereInput> | null
+  notifications?: Prisma.NotificationListRelationFilter
+  payments?: Prisma.PaymentListRelationFilter
+  progressLogs?: Prisma.ProgressLogListRelationFilter
+  attendances?: Prisma.AttendanceListRelationFilter
+  adminReviewedCertifications?: Prisma.TrainerCertificationListRelationFilter
+  referredMembers?: Prisma.MemberReferralListRelationFilter
+  businessReferrals?: Prisma.BusinessReferralListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -249,9 +243,7 @@ export type UserOrderByWithRelationInput = {
   fullName?: Prisma.SortOrderInput | Prisma.SortOrder
   email?: Prisma.SortOrder
   emailVerified?: Prisma.SortOrder
-  bio?: Prisma.SortOrderInput | Prisma.SortOrder
   profileImage?: Prisma.SortOrderInput | Prisma.SortOrder
-  fcmToken?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
@@ -259,8 +251,18 @@ export type UserOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   sessions?: Prisma.SessionOrderByRelationAggregateInput
   accounts?: Prisma.AccountOrderByRelationAggregateInput
-  sentNotifications?: Prisma.NotificationOrderByRelationAggregateInput
-  receivedNotifications?: Prisma.NotificationOrderByRelationAggregateInput
+  ownedBusinesses?: Prisma.BusinessOrderByRelationAggregateInput
+  staffRoles?: Prisma.BusinessStaffOrderByRelationAggregateInput
+  sentMessages?: Prisma.ChatMessageOrderByRelationAggregateInput
+  memberProfile?: Prisma.MemberProfileOrderByWithRelationInput
+  trainerProfile?: Prisma.TrainerProfileOrderByWithRelationInput
+  notifications?: Prisma.NotificationOrderByRelationAggregateInput
+  payments?: Prisma.PaymentOrderByRelationAggregateInput
+  progressLogs?: Prisma.ProgressLogOrderByRelationAggregateInput
+  attendances?: Prisma.AttendanceOrderByRelationAggregateInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationOrderByRelationAggregateInput
+  referredMembers?: Prisma.MemberReferralOrderByRelationAggregateInput
+  businessReferrals?: Prisma.BusinessReferralOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -271,18 +273,26 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   fullName?: Prisma.StringNullableFilter<"User"> | string | null
   emailVerified?: Prisma.BoolFilter<"User"> | boolean
-  bio?: Prisma.StringNullableFilter<"User"> | string | null
   profileImage?: Prisma.StringNullableFilter<"User"> | string | null
-  fcmToken?: Prisma.StringNullableFilter<"User"> | string | null
-  role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
+  role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
   isActive?: Prisma.BoolFilter<"User"> | boolean
   isVerified?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   sessions?: Prisma.SessionListRelationFilter
   accounts?: Prisma.AccountListRelationFilter
-  sentNotifications?: Prisma.NotificationListRelationFilter
-  receivedNotifications?: Prisma.NotificationListRelationFilter
+  ownedBusinesses?: Prisma.BusinessListRelationFilter
+  staffRoles?: Prisma.BusinessStaffListRelationFilter
+  sentMessages?: Prisma.ChatMessageListRelationFilter
+  memberProfile?: Prisma.XOR<Prisma.MemberProfileNullableScalarRelationFilter, Prisma.MemberProfileWhereInput> | null
+  trainerProfile?: Prisma.XOR<Prisma.TrainerProfileNullableScalarRelationFilter, Prisma.TrainerProfileWhereInput> | null
+  notifications?: Prisma.NotificationListRelationFilter
+  payments?: Prisma.PaymentListRelationFilter
+  progressLogs?: Prisma.ProgressLogListRelationFilter
+  attendances?: Prisma.AttendanceListRelationFilter
+  adminReviewedCertifications?: Prisma.TrainerCertificationListRelationFilter
+  referredMembers?: Prisma.MemberReferralListRelationFilter
+  businessReferrals?: Prisma.BusinessReferralListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -290,9 +300,7 @@ export type UserOrderByWithAggregationInput = {
   fullName?: Prisma.SortOrderInput | Prisma.SortOrder
   email?: Prisma.SortOrder
   emailVerified?: Prisma.SortOrder
-  bio?: Prisma.SortOrderInput | Prisma.SortOrder
   profileImage?: Prisma.SortOrderInput | Prisma.SortOrder
-  fcmToken?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
@@ -311,10 +319,8 @@ export type UserScalarWhereWithAggregatesInput = {
   fullName?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
   emailVerified?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
-  bio?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   profileImage?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  fcmToken?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  role?: Prisma.EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
+  role?: Prisma.EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
   isActive?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   isVerified?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
@@ -326,18 +332,26 @@ export type UserCreateInput = {
   fullName?: string | null
   email: string
   emailVerified?: boolean
-  bio?: string | null
   profileImage?: string | null
-  fcmToken?: string | null
-  role?: $Enums.UserRole
+  role: $Enums.Role
   isActive?: boolean
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
-  sentNotifications?: Prisma.NotificationCreateNestedManyWithoutSenderInput
-  receivedNotifications?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
+  ownedBusinesses?: Prisma.BusinessCreateNestedManyWithoutOwnerInput
+  staffRoles?: Prisma.BusinessStaffCreateNestedManyWithoutUserInput
+  sentMessages?: Prisma.ChatMessageCreateNestedManyWithoutSenderInput
+  memberProfile?: Prisma.MemberProfileCreateNestedOneWithoutUserInput
+  trainerProfile?: Prisma.TrainerProfileCreateNestedOneWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutPayerInput
+  progressLogs?: Prisma.ProgressLogCreateNestedManyWithoutLoggedByUserInput
+  attendances?: Prisma.AttendanceCreateNestedManyWithoutUserInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationCreateNestedManyWithoutReviewedByAdminInput
+  referredMembers?: Prisma.MemberReferralCreateNestedManyWithoutReferredUserInput
+  businessReferrals?: Prisma.BusinessReferralCreateNestedManyWithoutReferrerOwnerInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -345,18 +359,26 @@ export type UserUncheckedCreateInput = {
   fullName?: string | null
   email: string
   emailVerified?: boolean
-  bio?: string | null
   profileImage?: string | null
-  fcmToken?: string | null
-  role?: $Enums.UserRole
+  role: $Enums.Role
   isActive?: boolean
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
-  sentNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput
-  receivedNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
+  ownedBusinesses?: Prisma.BusinessUncheckedCreateNestedManyWithoutOwnerInput
+  staffRoles?: Prisma.BusinessStaffUncheckedCreateNestedManyWithoutUserInput
+  sentMessages?: Prisma.ChatMessageUncheckedCreateNestedManyWithoutSenderInput
+  memberProfile?: Prisma.MemberProfileUncheckedCreateNestedOneWithoutUserInput
+  trainerProfile?: Prisma.TrainerProfileUncheckedCreateNestedOneWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutPayerInput
+  progressLogs?: Prisma.ProgressLogUncheckedCreateNestedManyWithoutLoggedByUserInput
+  attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutUserInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationUncheckedCreateNestedManyWithoutReviewedByAdminInput
+  referredMembers?: Prisma.MemberReferralUncheckedCreateNestedManyWithoutReferredUserInput
+  businessReferrals?: Prisma.BusinessReferralUncheckedCreateNestedManyWithoutReferrerOwnerInput
 }
 
 export type UserUpdateInput = {
@@ -364,18 +386,26 @@ export type UserUpdateInput = {
   fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
-  sentNotifications?: Prisma.NotificationUpdateManyWithoutSenderNestedInput
-  receivedNotifications?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
+  ownedBusinesses?: Prisma.BusinessUpdateManyWithoutOwnerNestedInput
+  staffRoles?: Prisma.BusinessStaffUpdateManyWithoutUserNestedInput
+  sentMessages?: Prisma.ChatMessageUpdateManyWithoutSenderNestedInput
+  memberProfile?: Prisma.MemberProfileUpdateOneWithoutUserNestedInput
+  trainerProfile?: Prisma.TrainerProfileUpdateOneWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutPayerNestedInput
+  progressLogs?: Prisma.ProgressLogUpdateManyWithoutLoggedByUserNestedInput
+  attendances?: Prisma.AttendanceUpdateManyWithoutUserNestedInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationUpdateManyWithoutReviewedByAdminNestedInput
+  referredMembers?: Prisma.MemberReferralUpdateManyWithoutReferredUserNestedInput
+  businessReferrals?: Prisma.BusinessReferralUpdateManyWithoutReferrerOwnerNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -383,18 +413,26 @@ export type UserUncheckedUpdateInput = {
   fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
-  sentNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput
-  receivedNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
+  ownedBusinesses?: Prisma.BusinessUncheckedUpdateManyWithoutOwnerNestedInput
+  staffRoles?: Prisma.BusinessStaffUncheckedUpdateManyWithoutUserNestedInput
+  sentMessages?: Prisma.ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+  memberProfile?: Prisma.MemberProfileUncheckedUpdateOneWithoutUserNestedInput
+  trainerProfile?: Prisma.TrainerProfileUncheckedUpdateOneWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutPayerNestedInput
+  progressLogs?: Prisma.ProgressLogUncheckedUpdateManyWithoutLoggedByUserNestedInput
+  attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutUserNestedInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationUncheckedUpdateManyWithoutReviewedByAdminNestedInput
+  referredMembers?: Prisma.MemberReferralUncheckedUpdateManyWithoutReferredUserNestedInput
+  businessReferrals?: Prisma.BusinessReferralUncheckedUpdateManyWithoutReferrerOwnerNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -402,10 +440,8 @@ export type UserCreateManyInput = {
   fullName?: string | null
   email: string
   emailVerified?: boolean
-  bio?: string | null
   profileImage?: string | null
-  fcmToken?: string | null
-  role?: $Enums.UserRole
+  role: $Enums.Role
   isActive?: boolean
   isVerified?: boolean
   createdAt?: Date | string
@@ -417,10 +453,8 @@ export type UserUpdateManyMutationInput = {
   fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -432,19 +466,12 @@ export type UserUncheckedUpdateManyInput = {
   fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type UserNullableScalarRelationFilter = {
-  is?: Prisma.UserWhereInput | null
-  isNot?: Prisma.UserWhereInput | null
 }
 
 export type UserScalarRelationFilter = {
@@ -452,14 +479,17 @@ export type UserScalarRelationFilter = {
   isNot?: Prisma.UserWhereInput
 }
 
+export type UserNullableScalarRelationFilter = {
+  is?: Prisma.UserWhereInput | null
+  isNot?: Prisma.UserWhereInput | null
+}
+
 export type UserCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   fullName?: Prisma.SortOrder
   email?: Prisma.SortOrder
   emailVerified?: Prisma.SortOrder
-  bio?: Prisma.SortOrder
   profileImage?: Prisma.SortOrder
-  fcmToken?: Prisma.SortOrder
   role?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
@@ -472,9 +502,7 @@ export type UserMaxOrderByAggregateInput = {
   fullName?: Prisma.SortOrder
   email?: Prisma.SortOrder
   emailVerified?: Prisma.SortOrder
-  bio?: Prisma.SortOrder
   profileImage?: Prisma.SortOrder
-  fcmToken?: Prisma.SortOrder
   role?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
@@ -487,9 +515,7 @@ export type UserMinOrderByAggregateInput = {
   fullName?: Prisma.SortOrder
   email?: Prisma.SortOrder
   emailVerified?: Prisma.SortOrder
-  bio?: Prisma.SortOrder
   profileImage?: Prisma.SortOrder
-  fcmToken?: Prisma.SortOrder
   role?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
@@ -497,38 +523,178 @@ export type UserMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
-export type UserCreateNestedOneWithoutSentNotificationsInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutSentNotificationsInput, Prisma.UserUncheckedCreateWithoutSentNotificationsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSentNotificationsInput
+export type UserCreateNestedOneWithoutAttendancesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAttendancesInput, Prisma.UserUncheckedCreateWithoutAttendancesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAttendancesInput
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserCreateNestedOneWithoutReceivedNotificationsInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutReceivedNotificationsInput, Prisma.UserUncheckedCreateWithoutReceivedNotificationsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReceivedNotificationsInput
+export type UserUpdateOneRequiredWithoutAttendancesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAttendancesInput, Prisma.UserUncheckedCreateWithoutAttendancesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAttendancesInput
+  upsert?: Prisma.UserUpsertWithoutAttendancesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAttendancesInput, Prisma.UserUpdateWithoutAttendancesInput>, Prisma.UserUncheckedUpdateWithoutAttendancesInput>
+}
+
+export type UserCreateNestedOneWithoutOwnedBusinessesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutOwnedBusinessesInput, Prisma.UserUncheckedCreateWithoutOwnedBusinessesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutOwnedBusinessesInput
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneWithoutSentNotificationsNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutSentNotificationsInput, Prisma.UserUncheckedCreateWithoutSentNotificationsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSentNotificationsInput
-  upsert?: Prisma.UserUpsertWithoutSentNotificationsInput
+export type UserUpdateOneRequiredWithoutOwnedBusinessesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutOwnedBusinessesInput, Prisma.UserUncheckedCreateWithoutOwnedBusinessesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutOwnedBusinessesInput
+  upsert?: Prisma.UserUpsertWithoutOwnedBusinessesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutOwnedBusinessesInput, Prisma.UserUpdateWithoutOwnedBusinessesInput>, Prisma.UserUncheckedUpdateWithoutOwnedBusinessesInput>
+}
+
+export type UserCreateNestedOneWithoutBusinessReferralsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutBusinessReferralsInput, Prisma.UserUncheckedCreateWithoutBusinessReferralsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutBusinessReferralsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutBusinessReferralsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutBusinessReferralsInput, Prisma.UserUncheckedCreateWithoutBusinessReferralsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutBusinessReferralsInput
+  upsert?: Prisma.UserUpsertWithoutBusinessReferralsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutBusinessReferralsInput, Prisma.UserUpdateWithoutBusinessReferralsInput>, Prisma.UserUncheckedUpdateWithoutBusinessReferralsInput>
+}
+
+export type UserCreateNestedOneWithoutStaffRolesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutStaffRolesInput, Prisma.UserUncheckedCreateWithoutStaffRolesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutStaffRolesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutStaffRolesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutStaffRolesInput, Prisma.UserUncheckedCreateWithoutStaffRolesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutStaffRolesInput
+  upsert?: Prisma.UserUpsertWithoutStaffRolesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutStaffRolesInput, Prisma.UserUpdateWithoutStaffRolesInput>, Prisma.UserUncheckedUpdateWithoutStaffRolesInput>
+}
+
+export type UserCreateNestedOneWithoutSentMessagesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSentMessagesInput, Prisma.UserUncheckedCreateWithoutSentMessagesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSentMessagesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutSentMessagesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSentMessagesInput, Prisma.UserUncheckedCreateWithoutSentMessagesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSentMessagesInput
+  upsert?: Prisma.UserUpsertWithoutSentMessagesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSentMessagesInput, Prisma.UserUpdateWithoutSentMessagesInput>, Prisma.UserUncheckedUpdateWithoutSentMessagesInput>
+}
+
+export type UserCreateNestedOneWithoutMemberProfileInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutMemberProfileInput, Prisma.UserUncheckedCreateWithoutMemberProfileInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMemberProfileInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutMemberProfileNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutMemberProfileInput, Prisma.UserUncheckedCreateWithoutMemberProfileInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMemberProfileInput
+  upsert?: Prisma.UserUpsertWithoutMemberProfileInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutMemberProfileInput, Prisma.UserUpdateWithoutMemberProfileInput>, Prisma.UserUncheckedUpdateWithoutMemberProfileInput>
+}
+
+export type UserCreateNestedOneWithoutReferredMembersInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutReferredMembersInput, Prisma.UserUncheckedCreateWithoutReferredMembersInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReferredMembersInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutReferredMembersNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutReferredMembersInput, Prisma.UserUncheckedCreateWithoutReferredMembersInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReferredMembersInput
+  upsert?: Prisma.UserUpsertWithoutReferredMembersInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutReferredMembersInput, Prisma.UserUpdateWithoutReferredMembersInput>, Prisma.UserUncheckedUpdateWithoutReferredMembersInput>
+}
+
+export type UserCreateNestedOneWithoutNotificationsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutNotificationsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationsInput
+  upsert?: Prisma.UserUpsertWithoutNotificationsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutNotificationsInput, Prisma.UserUpdateWithoutNotificationsInput>, Prisma.UserUncheckedUpdateWithoutNotificationsInput>
+}
+
+export type UserCreateNestedOneWithoutPaymentsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPaymentsInput, Prisma.UserUncheckedCreateWithoutPaymentsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPaymentsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutPaymentsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPaymentsInput, Prisma.UserUncheckedCreateWithoutPaymentsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPaymentsInput
+  upsert?: Prisma.UserUpsertWithoutPaymentsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPaymentsInput, Prisma.UserUpdateWithoutPaymentsInput>, Prisma.UserUncheckedUpdateWithoutPaymentsInput>
+}
+
+export type UserCreateNestedOneWithoutProgressLogsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutProgressLogsInput, Prisma.UserUncheckedCreateWithoutProgressLogsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutProgressLogsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutProgressLogsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutProgressLogsInput, Prisma.UserUncheckedCreateWithoutProgressLogsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutProgressLogsInput
+  upsert?: Prisma.UserUpsertWithoutProgressLogsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutProgressLogsInput, Prisma.UserUpdateWithoutProgressLogsInput>, Prisma.UserUncheckedUpdateWithoutProgressLogsInput>
+}
+
+export type UserCreateNestedOneWithoutAdminReviewedCertificationsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAdminReviewedCertificationsInput, Prisma.UserUncheckedCreateWithoutAdminReviewedCertificationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAdminReviewedCertificationsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutAdminReviewedCertificationsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAdminReviewedCertificationsInput, Prisma.UserUncheckedCreateWithoutAdminReviewedCertificationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAdminReviewedCertificationsInput
+  upsert?: Prisma.UserUpsertWithoutAdminReviewedCertificationsInput
   disconnect?: Prisma.UserWhereInput | boolean
   delete?: Prisma.UserWhereInput | boolean
   connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSentNotificationsInput, Prisma.UserUpdateWithoutSentNotificationsInput>, Prisma.UserUncheckedUpdateWithoutSentNotificationsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAdminReviewedCertificationsInput, Prisma.UserUpdateWithoutAdminReviewedCertificationsInput>, Prisma.UserUncheckedUpdateWithoutAdminReviewedCertificationsInput>
 }
 
-export type UserUpdateOneRequiredWithoutReceivedNotificationsNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutReceivedNotificationsInput, Prisma.UserUncheckedCreateWithoutReceivedNotificationsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReceivedNotificationsInput
-  upsert?: Prisma.UserUpsertWithoutReceivedNotificationsInput
+export type UserCreateNestedOneWithoutTrainerProfileInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTrainerProfileInput, Prisma.UserUncheckedCreateWithoutTrainerProfileInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTrainerProfileInput
   connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutReceivedNotificationsInput, Prisma.UserUpdateWithoutReceivedNotificationsInput>, Prisma.UserUncheckedUpdateWithoutReceivedNotificationsInput>
 }
 
-export type EnumUserRoleFieldUpdateOperationsInput = {
-  set?: $Enums.UserRole
+export type UserUpdateOneRequiredWithoutTrainerProfileNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTrainerProfileInput, Prisma.UserUncheckedCreateWithoutTrainerProfileInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTrainerProfileInput
+  upsert?: Prisma.UserUpsertWithoutTrainerProfileInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTrainerProfileInput, Prisma.UserUpdateWithoutTrainerProfileInput>, Prisma.UserUncheckedUpdateWithoutTrainerProfileInput>
+}
+
+export type EnumRoleFieldUpdateOperationsInput = {
+  set?: $Enums.Role
 }
 
 export type UserCreateNestedOneWithoutSessionsInput = {
@@ -559,180 +725,1444 @@ export type UserUpdateOneRequiredWithoutAccountsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAccountsInput, Prisma.UserUpdateWithoutAccountsInput>, Prisma.UserUncheckedUpdateWithoutAccountsInput>
 }
 
-export type UserCreateWithoutSentNotificationsInput = {
+export type UserCreateWithoutAttendancesInput = {
   id?: string
   fullName?: string | null
   email: string
   emailVerified?: boolean
-  bio?: string | null
   profileImage?: string | null
-  fcmToken?: string | null
-  role?: $Enums.UserRole
+  role: $Enums.Role
   isActive?: boolean
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
-  receivedNotifications?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
+  ownedBusinesses?: Prisma.BusinessCreateNestedManyWithoutOwnerInput
+  staffRoles?: Prisma.BusinessStaffCreateNestedManyWithoutUserInput
+  sentMessages?: Prisma.ChatMessageCreateNestedManyWithoutSenderInput
+  memberProfile?: Prisma.MemberProfileCreateNestedOneWithoutUserInput
+  trainerProfile?: Prisma.TrainerProfileCreateNestedOneWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutPayerInput
+  progressLogs?: Prisma.ProgressLogCreateNestedManyWithoutLoggedByUserInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationCreateNestedManyWithoutReviewedByAdminInput
+  referredMembers?: Prisma.MemberReferralCreateNestedManyWithoutReferredUserInput
+  businessReferrals?: Prisma.BusinessReferralCreateNestedManyWithoutReferrerOwnerInput
 }
 
-export type UserUncheckedCreateWithoutSentNotificationsInput = {
+export type UserUncheckedCreateWithoutAttendancesInput = {
   id?: string
   fullName?: string | null
   email: string
   emailVerified?: boolean
-  bio?: string | null
   profileImage?: string | null
-  fcmToken?: string | null
-  role?: $Enums.UserRole
+  role: $Enums.Role
   isActive?: boolean
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
-  receivedNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
+  ownedBusinesses?: Prisma.BusinessUncheckedCreateNestedManyWithoutOwnerInput
+  staffRoles?: Prisma.BusinessStaffUncheckedCreateNestedManyWithoutUserInput
+  sentMessages?: Prisma.ChatMessageUncheckedCreateNestedManyWithoutSenderInput
+  memberProfile?: Prisma.MemberProfileUncheckedCreateNestedOneWithoutUserInput
+  trainerProfile?: Prisma.TrainerProfileUncheckedCreateNestedOneWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutPayerInput
+  progressLogs?: Prisma.ProgressLogUncheckedCreateNestedManyWithoutLoggedByUserInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationUncheckedCreateNestedManyWithoutReviewedByAdminInput
+  referredMembers?: Prisma.MemberReferralUncheckedCreateNestedManyWithoutReferredUserInput
+  businessReferrals?: Prisma.BusinessReferralUncheckedCreateNestedManyWithoutReferrerOwnerInput
 }
 
-export type UserCreateOrConnectWithoutSentNotificationsInput = {
+export type UserCreateOrConnectWithoutAttendancesInput = {
   where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutSentNotificationsInput, Prisma.UserUncheckedCreateWithoutSentNotificationsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAttendancesInput, Prisma.UserUncheckedCreateWithoutAttendancesInput>
 }
 
-export type UserCreateWithoutReceivedNotificationsInput = {
+export type UserUpsertWithoutAttendancesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAttendancesInput, Prisma.UserUncheckedUpdateWithoutAttendancesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAttendancesInput, Prisma.UserUncheckedCreateWithoutAttendancesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutAttendancesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAttendancesInput, Prisma.UserUncheckedUpdateWithoutAttendancesInput>
+}
+
+export type UserUpdateWithoutAttendancesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  ownedBusinesses?: Prisma.BusinessUpdateManyWithoutOwnerNestedInput
+  staffRoles?: Prisma.BusinessStaffUpdateManyWithoutUserNestedInput
+  sentMessages?: Prisma.ChatMessageUpdateManyWithoutSenderNestedInput
+  memberProfile?: Prisma.MemberProfileUpdateOneWithoutUserNestedInput
+  trainerProfile?: Prisma.TrainerProfileUpdateOneWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutPayerNestedInput
+  progressLogs?: Prisma.ProgressLogUpdateManyWithoutLoggedByUserNestedInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationUpdateManyWithoutReviewedByAdminNestedInput
+  referredMembers?: Prisma.MemberReferralUpdateManyWithoutReferredUserNestedInput
+  businessReferrals?: Prisma.BusinessReferralUpdateManyWithoutReferrerOwnerNestedInput
+}
+
+export type UserUncheckedUpdateWithoutAttendancesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  ownedBusinesses?: Prisma.BusinessUncheckedUpdateManyWithoutOwnerNestedInput
+  staffRoles?: Prisma.BusinessStaffUncheckedUpdateManyWithoutUserNestedInput
+  sentMessages?: Prisma.ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+  memberProfile?: Prisma.MemberProfileUncheckedUpdateOneWithoutUserNestedInput
+  trainerProfile?: Prisma.TrainerProfileUncheckedUpdateOneWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutPayerNestedInput
+  progressLogs?: Prisma.ProgressLogUncheckedUpdateManyWithoutLoggedByUserNestedInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationUncheckedUpdateManyWithoutReviewedByAdminNestedInput
+  referredMembers?: Prisma.MemberReferralUncheckedUpdateManyWithoutReferredUserNestedInput
+  businessReferrals?: Prisma.BusinessReferralUncheckedUpdateManyWithoutReferrerOwnerNestedInput
+}
+
+export type UserCreateWithoutOwnedBusinessesInput = {
   id?: string
   fullName?: string | null
   email: string
   emailVerified?: boolean
-  bio?: string | null
   profileImage?: string | null
-  fcmToken?: string | null
-  role?: $Enums.UserRole
+  role: $Enums.Role
   isActive?: boolean
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
-  sentNotifications?: Prisma.NotificationCreateNestedManyWithoutSenderInput
+  staffRoles?: Prisma.BusinessStaffCreateNestedManyWithoutUserInput
+  sentMessages?: Prisma.ChatMessageCreateNestedManyWithoutSenderInput
+  memberProfile?: Prisma.MemberProfileCreateNestedOneWithoutUserInput
+  trainerProfile?: Prisma.TrainerProfileCreateNestedOneWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutPayerInput
+  progressLogs?: Prisma.ProgressLogCreateNestedManyWithoutLoggedByUserInput
+  attendances?: Prisma.AttendanceCreateNestedManyWithoutUserInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationCreateNestedManyWithoutReviewedByAdminInput
+  referredMembers?: Prisma.MemberReferralCreateNestedManyWithoutReferredUserInput
+  businessReferrals?: Prisma.BusinessReferralCreateNestedManyWithoutReferrerOwnerInput
 }
 
-export type UserUncheckedCreateWithoutReceivedNotificationsInput = {
+export type UserUncheckedCreateWithoutOwnedBusinessesInput = {
   id?: string
   fullName?: string | null
   email: string
   emailVerified?: boolean
-  bio?: string | null
   profileImage?: string | null
-  fcmToken?: string | null
-  role?: $Enums.UserRole
+  role: $Enums.Role
   isActive?: boolean
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
-  sentNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput
+  staffRoles?: Prisma.BusinessStaffUncheckedCreateNestedManyWithoutUserInput
+  sentMessages?: Prisma.ChatMessageUncheckedCreateNestedManyWithoutSenderInput
+  memberProfile?: Prisma.MemberProfileUncheckedCreateNestedOneWithoutUserInput
+  trainerProfile?: Prisma.TrainerProfileUncheckedCreateNestedOneWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutPayerInput
+  progressLogs?: Prisma.ProgressLogUncheckedCreateNestedManyWithoutLoggedByUserInput
+  attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutUserInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationUncheckedCreateNestedManyWithoutReviewedByAdminInput
+  referredMembers?: Prisma.MemberReferralUncheckedCreateNestedManyWithoutReferredUserInput
+  businessReferrals?: Prisma.BusinessReferralUncheckedCreateNestedManyWithoutReferrerOwnerInput
 }
 
-export type UserCreateOrConnectWithoutReceivedNotificationsInput = {
+export type UserCreateOrConnectWithoutOwnedBusinessesInput = {
   where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutReceivedNotificationsInput, Prisma.UserUncheckedCreateWithoutReceivedNotificationsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutOwnedBusinessesInput, Prisma.UserUncheckedCreateWithoutOwnedBusinessesInput>
 }
 
-export type UserUpsertWithoutSentNotificationsInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutSentNotificationsInput, Prisma.UserUncheckedUpdateWithoutSentNotificationsInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutSentNotificationsInput, Prisma.UserUncheckedCreateWithoutSentNotificationsInput>
+export type UserUpsertWithoutOwnedBusinessesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutOwnedBusinessesInput, Prisma.UserUncheckedUpdateWithoutOwnedBusinessesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutOwnedBusinessesInput, Prisma.UserUncheckedCreateWithoutOwnedBusinessesInput>
   where?: Prisma.UserWhereInput
 }
 
-export type UserUpdateToOneWithWhereWithoutSentNotificationsInput = {
+export type UserUpdateToOneWithWhereWithoutOwnedBusinessesInput = {
   where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutSentNotificationsInput, Prisma.UserUncheckedUpdateWithoutSentNotificationsInput>
+  data: Prisma.XOR<Prisma.UserUpdateWithoutOwnedBusinessesInput, Prisma.UserUncheckedUpdateWithoutOwnedBusinessesInput>
 }
 
-export type UserUpdateWithoutSentNotificationsInput = {
+export type UserUpdateWithoutOwnedBusinessesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
-  receivedNotifications?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
+  staffRoles?: Prisma.BusinessStaffUpdateManyWithoutUserNestedInput
+  sentMessages?: Prisma.ChatMessageUpdateManyWithoutSenderNestedInput
+  memberProfile?: Prisma.MemberProfileUpdateOneWithoutUserNestedInput
+  trainerProfile?: Prisma.TrainerProfileUpdateOneWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutPayerNestedInput
+  progressLogs?: Prisma.ProgressLogUpdateManyWithoutLoggedByUserNestedInput
+  attendances?: Prisma.AttendanceUpdateManyWithoutUserNestedInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationUpdateManyWithoutReviewedByAdminNestedInput
+  referredMembers?: Prisma.MemberReferralUpdateManyWithoutReferredUserNestedInput
+  businessReferrals?: Prisma.BusinessReferralUpdateManyWithoutReferrerOwnerNestedInput
 }
 
-export type UserUncheckedUpdateWithoutSentNotificationsInput = {
+export type UserUncheckedUpdateWithoutOwnedBusinessesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
-  receivedNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
+  staffRoles?: Prisma.BusinessStaffUncheckedUpdateManyWithoutUserNestedInput
+  sentMessages?: Prisma.ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+  memberProfile?: Prisma.MemberProfileUncheckedUpdateOneWithoutUserNestedInput
+  trainerProfile?: Prisma.TrainerProfileUncheckedUpdateOneWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutPayerNestedInput
+  progressLogs?: Prisma.ProgressLogUncheckedUpdateManyWithoutLoggedByUserNestedInput
+  attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutUserNestedInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationUncheckedUpdateManyWithoutReviewedByAdminNestedInput
+  referredMembers?: Prisma.MemberReferralUncheckedUpdateManyWithoutReferredUserNestedInput
+  businessReferrals?: Prisma.BusinessReferralUncheckedUpdateManyWithoutReferrerOwnerNestedInput
 }
 
-export type UserUpsertWithoutReceivedNotificationsInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutReceivedNotificationsInput, Prisma.UserUncheckedUpdateWithoutReceivedNotificationsInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutReceivedNotificationsInput, Prisma.UserUncheckedCreateWithoutReceivedNotificationsInput>
+export type UserCreateWithoutBusinessReferralsInput = {
+  id?: string
+  fullName?: string | null
+  email: string
+  emailVerified?: boolean
+  profileImage?: string | null
+  role: $Enums.Role
+  isActive?: boolean
+  isVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  ownedBusinesses?: Prisma.BusinessCreateNestedManyWithoutOwnerInput
+  staffRoles?: Prisma.BusinessStaffCreateNestedManyWithoutUserInput
+  sentMessages?: Prisma.ChatMessageCreateNestedManyWithoutSenderInput
+  memberProfile?: Prisma.MemberProfileCreateNestedOneWithoutUserInput
+  trainerProfile?: Prisma.TrainerProfileCreateNestedOneWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutPayerInput
+  progressLogs?: Prisma.ProgressLogCreateNestedManyWithoutLoggedByUserInput
+  attendances?: Prisma.AttendanceCreateNestedManyWithoutUserInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationCreateNestedManyWithoutReviewedByAdminInput
+  referredMembers?: Prisma.MemberReferralCreateNestedManyWithoutReferredUserInput
+}
+
+export type UserUncheckedCreateWithoutBusinessReferralsInput = {
+  id?: string
+  fullName?: string | null
+  email: string
+  emailVerified?: boolean
+  profileImage?: string | null
+  role: $Enums.Role
+  isActive?: boolean
+  isVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  ownedBusinesses?: Prisma.BusinessUncheckedCreateNestedManyWithoutOwnerInput
+  staffRoles?: Prisma.BusinessStaffUncheckedCreateNestedManyWithoutUserInput
+  sentMessages?: Prisma.ChatMessageUncheckedCreateNestedManyWithoutSenderInput
+  memberProfile?: Prisma.MemberProfileUncheckedCreateNestedOneWithoutUserInput
+  trainerProfile?: Prisma.TrainerProfileUncheckedCreateNestedOneWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutPayerInput
+  progressLogs?: Prisma.ProgressLogUncheckedCreateNestedManyWithoutLoggedByUserInput
+  attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutUserInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationUncheckedCreateNestedManyWithoutReviewedByAdminInput
+  referredMembers?: Prisma.MemberReferralUncheckedCreateNestedManyWithoutReferredUserInput
+}
+
+export type UserCreateOrConnectWithoutBusinessReferralsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutBusinessReferralsInput, Prisma.UserUncheckedCreateWithoutBusinessReferralsInput>
+}
+
+export type UserUpsertWithoutBusinessReferralsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutBusinessReferralsInput, Prisma.UserUncheckedUpdateWithoutBusinessReferralsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutBusinessReferralsInput, Prisma.UserUncheckedCreateWithoutBusinessReferralsInput>
   where?: Prisma.UserWhereInput
 }
 
-export type UserUpdateToOneWithWhereWithoutReceivedNotificationsInput = {
+export type UserUpdateToOneWithWhereWithoutBusinessReferralsInput = {
   where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutReceivedNotificationsInput, Prisma.UserUncheckedUpdateWithoutReceivedNotificationsInput>
+  data: Prisma.XOR<Prisma.UserUpdateWithoutBusinessReferralsInput, Prisma.UserUncheckedUpdateWithoutBusinessReferralsInput>
 }
 
-export type UserUpdateWithoutReceivedNotificationsInput = {
+export type UserUpdateWithoutBusinessReferralsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
-  sentNotifications?: Prisma.NotificationUpdateManyWithoutSenderNestedInput
+  ownedBusinesses?: Prisma.BusinessUpdateManyWithoutOwnerNestedInput
+  staffRoles?: Prisma.BusinessStaffUpdateManyWithoutUserNestedInput
+  sentMessages?: Prisma.ChatMessageUpdateManyWithoutSenderNestedInput
+  memberProfile?: Prisma.MemberProfileUpdateOneWithoutUserNestedInput
+  trainerProfile?: Prisma.TrainerProfileUpdateOneWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutPayerNestedInput
+  progressLogs?: Prisma.ProgressLogUpdateManyWithoutLoggedByUserNestedInput
+  attendances?: Prisma.AttendanceUpdateManyWithoutUserNestedInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationUpdateManyWithoutReviewedByAdminNestedInput
+  referredMembers?: Prisma.MemberReferralUpdateManyWithoutReferredUserNestedInput
 }
 
-export type UserUncheckedUpdateWithoutReceivedNotificationsInput = {
+export type UserUncheckedUpdateWithoutBusinessReferralsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
-  sentNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput
+  ownedBusinesses?: Prisma.BusinessUncheckedUpdateManyWithoutOwnerNestedInput
+  staffRoles?: Prisma.BusinessStaffUncheckedUpdateManyWithoutUserNestedInput
+  sentMessages?: Prisma.ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+  memberProfile?: Prisma.MemberProfileUncheckedUpdateOneWithoutUserNestedInput
+  trainerProfile?: Prisma.TrainerProfileUncheckedUpdateOneWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutPayerNestedInput
+  progressLogs?: Prisma.ProgressLogUncheckedUpdateManyWithoutLoggedByUserNestedInput
+  attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutUserNestedInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationUncheckedUpdateManyWithoutReviewedByAdminNestedInput
+  referredMembers?: Prisma.MemberReferralUncheckedUpdateManyWithoutReferredUserNestedInput
+}
+
+export type UserCreateWithoutStaffRolesInput = {
+  id?: string
+  fullName?: string | null
+  email: string
+  emailVerified?: boolean
+  profileImage?: string | null
+  role: $Enums.Role
+  isActive?: boolean
+  isVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  ownedBusinesses?: Prisma.BusinessCreateNestedManyWithoutOwnerInput
+  sentMessages?: Prisma.ChatMessageCreateNestedManyWithoutSenderInput
+  memberProfile?: Prisma.MemberProfileCreateNestedOneWithoutUserInput
+  trainerProfile?: Prisma.TrainerProfileCreateNestedOneWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutPayerInput
+  progressLogs?: Prisma.ProgressLogCreateNestedManyWithoutLoggedByUserInput
+  attendances?: Prisma.AttendanceCreateNestedManyWithoutUserInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationCreateNestedManyWithoutReviewedByAdminInput
+  referredMembers?: Prisma.MemberReferralCreateNestedManyWithoutReferredUserInput
+  businessReferrals?: Prisma.BusinessReferralCreateNestedManyWithoutReferrerOwnerInput
+}
+
+export type UserUncheckedCreateWithoutStaffRolesInput = {
+  id?: string
+  fullName?: string | null
+  email: string
+  emailVerified?: boolean
+  profileImage?: string | null
+  role: $Enums.Role
+  isActive?: boolean
+  isVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  ownedBusinesses?: Prisma.BusinessUncheckedCreateNestedManyWithoutOwnerInput
+  sentMessages?: Prisma.ChatMessageUncheckedCreateNestedManyWithoutSenderInput
+  memberProfile?: Prisma.MemberProfileUncheckedCreateNestedOneWithoutUserInput
+  trainerProfile?: Prisma.TrainerProfileUncheckedCreateNestedOneWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutPayerInput
+  progressLogs?: Prisma.ProgressLogUncheckedCreateNestedManyWithoutLoggedByUserInput
+  attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutUserInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationUncheckedCreateNestedManyWithoutReviewedByAdminInput
+  referredMembers?: Prisma.MemberReferralUncheckedCreateNestedManyWithoutReferredUserInput
+  businessReferrals?: Prisma.BusinessReferralUncheckedCreateNestedManyWithoutReferrerOwnerInput
+}
+
+export type UserCreateOrConnectWithoutStaffRolesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutStaffRolesInput, Prisma.UserUncheckedCreateWithoutStaffRolesInput>
+}
+
+export type UserUpsertWithoutStaffRolesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutStaffRolesInput, Prisma.UserUncheckedUpdateWithoutStaffRolesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutStaffRolesInput, Prisma.UserUncheckedCreateWithoutStaffRolesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutStaffRolesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutStaffRolesInput, Prisma.UserUncheckedUpdateWithoutStaffRolesInput>
+}
+
+export type UserUpdateWithoutStaffRolesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  ownedBusinesses?: Prisma.BusinessUpdateManyWithoutOwnerNestedInput
+  sentMessages?: Prisma.ChatMessageUpdateManyWithoutSenderNestedInput
+  memberProfile?: Prisma.MemberProfileUpdateOneWithoutUserNestedInput
+  trainerProfile?: Prisma.TrainerProfileUpdateOneWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutPayerNestedInput
+  progressLogs?: Prisma.ProgressLogUpdateManyWithoutLoggedByUserNestedInput
+  attendances?: Prisma.AttendanceUpdateManyWithoutUserNestedInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationUpdateManyWithoutReviewedByAdminNestedInput
+  referredMembers?: Prisma.MemberReferralUpdateManyWithoutReferredUserNestedInput
+  businessReferrals?: Prisma.BusinessReferralUpdateManyWithoutReferrerOwnerNestedInput
+}
+
+export type UserUncheckedUpdateWithoutStaffRolesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  ownedBusinesses?: Prisma.BusinessUncheckedUpdateManyWithoutOwnerNestedInput
+  sentMessages?: Prisma.ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+  memberProfile?: Prisma.MemberProfileUncheckedUpdateOneWithoutUserNestedInput
+  trainerProfile?: Prisma.TrainerProfileUncheckedUpdateOneWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutPayerNestedInput
+  progressLogs?: Prisma.ProgressLogUncheckedUpdateManyWithoutLoggedByUserNestedInput
+  attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutUserNestedInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationUncheckedUpdateManyWithoutReviewedByAdminNestedInput
+  referredMembers?: Prisma.MemberReferralUncheckedUpdateManyWithoutReferredUserNestedInput
+  businessReferrals?: Prisma.BusinessReferralUncheckedUpdateManyWithoutReferrerOwnerNestedInput
+}
+
+export type UserCreateWithoutSentMessagesInput = {
+  id?: string
+  fullName?: string | null
+  email: string
+  emailVerified?: boolean
+  profileImage?: string | null
+  role: $Enums.Role
+  isActive?: boolean
+  isVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  ownedBusinesses?: Prisma.BusinessCreateNestedManyWithoutOwnerInput
+  staffRoles?: Prisma.BusinessStaffCreateNestedManyWithoutUserInput
+  memberProfile?: Prisma.MemberProfileCreateNestedOneWithoutUserInput
+  trainerProfile?: Prisma.TrainerProfileCreateNestedOneWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutPayerInput
+  progressLogs?: Prisma.ProgressLogCreateNestedManyWithoutLoggedByUserInput
+  attendances?: Prisma.AttendanceCreateNestedManyWithoutUserInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationCreateNestedManyWithoutReviewedByAdminInput
+  referredMembers?: Prisma.MemberReferralCreateNestedManyWithoutReferredUserInput
+  businessReferrals?: Prisma.BusinessReferralCreateNestedManyWithoutReferrerOwnerInput
+}
+
+export type UserUncheckedCreateWithoutSentMessagesInput = {
+  id?: string
+  fullName?: string | null
+  email: string
+  emailVerified?: boolean
+  profileImage?: string | null
+  role: $Enums.Role
+  isActive?: boolean
+  isVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  ownedBusinesses?: Prisma.BusinessUncheckedCreateNestedManyWithoutOwnerInput
+  staffRoles?: Prisma.BusinessStaffUncheckedCreateNestedManyWithoutUserInput
+  memberProfile?: Prisma.MemberProfileUncheckedCreateNestedOneWithoutUserInput
+  trainerProfile?: Prisma.TrainerProfileUncheckedCreateNestedOneWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutPayerInput
+  progressLogs?: Prisma.ProgressLogUncheckedCreateNestedManyWithoutLoggedByUserInput
+  attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutUserInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationUncheckedCreateNestedManyWithoutReviewedByAdminInput
+  referredMembers?: Prisma.MemberReferralUncheckedCreateNestedManyWithoutReferredUserInput
+  businessReferrals?: Prisma.BusinessReferralUncheckedCreateNestedManyWithoutReferrerOwnerInput
+}
+
+export type UserCreateOrConnectWithoutSentMessagesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutSentMessagesInput, Prisma.UserUncheckedCreateWithoutSentMessagesInput>
+}
+
+export type UserUpsertWithoutSentMessagesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutSentMessagesInput, Prisma.UserUncheckedUpdateWithoutSentMessagesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutSentMessagesInput, Prisma.UserUncheckedCreateWithoutSentMessagesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutSentMessagesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutSentMessagesInput, Prisma.UserUncheckedUpdateWithoutSentMessagesInput>
+}
+
+export type UserUpdateWithoutSentMessagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  ownedBusinesses?: Prisma.BusinessUpdateManyWithoutOwnerNestedInput
+  staffRoles?: Prisma.BusinessStaffUpdateManyWithoutUserNestedInput
+  memberProfile?: Prisma.MemberProfileUpdateOneWithoutUserNestedInput
+  trainerProfile?: Prisma.TrainerProfileUpdateOneWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutPayerNestedInput
+  progressLogs?: Prisma.ProgressLogUpdateManyWithoutLoggedByUserNestedInput
+  attendances?: Prisma.AttendanceUpdateManyWithoutUserNestedInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationUpdateManyWithoutReviewedByAdminNestedInput
+  referredMembers?: Prisma.MemberReferralUpdateManyWithoutReferredUserNestedInput
+  businessReferrals?: Prisma.BusinessReferralUpdateManyWithoutReferrerOwnerNestedInput
+}
+
+export type UserUncheckedUpdateWithoutSentMessagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  ownedBusinesses?: Prisma.BusinessUncheckedUpdateManyWithoutOwnerNestedInput
+  staffRoles?: Prisma.BusinessStaffUncheckedUpdateManyWithoutUserNestedInput
+  memberProfile?: Prisma.MemberProfileUncheckedUpdateOneWithoutUserNestedInput
+  trainerProfile?: Prisma.TrainerProfileUncheckedUpdateOneWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutPayerNestedInput
+  progressLogs?: Prisma.ProgressLogUncheckedUpdateManyWithoutLoggedByUserNestedInput
+  attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutUserNestedInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationUncheckedUpdateManyWithoutReviewedByAdminNestedInput
+  referredMembers?: Prisma.MemberReferralUncheckedUpdateManyWithoutReferredUserNestedInput
+  businessReferrals?: Prisma.BusinessReferralUncheckedUpdateManyWithoutReferrerOwnerNestedInput
+}
+
+export type UserCreateWithoutMemberProfileInput = {
+  id?: string
+  fullName?: string | null
+  email: string
+  emailVerified?: boolean
+  profileImage?: string | null
+  role: $Enums.Role
+  isActive?: boolean
+  isVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  ownedBusinesses?: Prisma.BusinessCreateNestedManyWithoutOwnerInput
+  staffRoles?: Prisma.BusinessStaffCreateNestedManyWithoutUserInput
+  sentMessages?: Prisma.ChatMessageCreateNestedManyWithoutSenderInput
+  trainerProfile?: Prisma.TrainerProfileCreateNestedOneWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutPayerInput
+  progressLogs?: Prisma.ProgressLogCreateNestedManyWithoutLoggedByUserInput
+  attendances?: Prisma.AttendanceCreateNestedManyWithoutUserInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationCreateNestedManyWithoutReviewedByAdminInput
+  referredMembers?: Prisma.MemberReferralCreateNestedManyWithoutReferredUserInput
+  businessReferrals?: Prisma.BusinessReferralCreateNestedManyWithoutReferrerOwnerInput
+}
+
+export type UserUncheckedCreateWithoutMemberProfileInput = {
+  id?: string
+  fullName?: string | null
+  email: string
+  emailVerified?: boolean
+  profileImage?: string | null
+  role: $Enums.Role
+  isActive?: boolean
+  isVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  ownedBusinesses?: Prisma.BusinessUncheckedCreateNestedManyWithoutOwnerInput
+  staffRoles?: Prisma.BusinessStaffUncheckedCreateNestedManyWithoutUserInput
+  sentMessages?: Prisma.ChatMessageUncheckedCreateNestedManyWithoutSenderInput
+  trainerProfile?: Prisma.TrainerProfileUncheckedCreateNestedOneWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutPayerInput
+  progressLogs?: Prisma.ProgressLogUncheckedCreateNestedManyWithoutLoggedByUserInput
+  attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutUserInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationUncheckedCreateNestedManyWithoutReviewedByAdminInput
+  referredMembers?: Prisma.MemberReferralUncheckedCreateNestedManyWithoutReferredUserInput
+  businessReferrals?: Prisma.BusinessReferralUncheckedCreateNestedManyWithoutReferrerOwnerInput
+}
+
+export type UserCreateOrConnectWithoutMemberProfileInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutMemberProfileInput, Prisma.UserUncheckedCreateWithoutMemberProfileInput>
+}
+
+export type UserUpsertWithoutMemberProfileInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutMemberProfileInput, Prisma.UserUncheckedUpdateWithoutMemberProfileInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutMemberProfileInput, Prisma.UserUncheckedCreateWithoutMemberProfileInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutMemberProfileInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutMemberProfileInput, Prisma.UserUncheckedUpdateWithoutMemberProfileInput>
+}
+
+export type UserUpdateWithoutMemberProfileInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  ownedBusinesses?: Prisma.BusinessUpdateManyWithoutOwnerNestedInput
+  staffRoles?: Prisma.BusinessStaffUpdateManyWithoutUserNestedInput
+  sentMessages?: Prisma.ChatMessageUpdateManyWithoutSenderNestedInput
+  trainerProfile?: Prisma.TrainerProfileUpdateOneWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutPayerNestedInput
+  progressLogs?: Prisma.ProgressLogUpdateManyWithoutLoggedByUserNestedInput
+  attendances?: Prisma.AttendanceUpdateManyWithoutUserNestedInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationUpdateManyWithoutReviewedByAdminNestedInput
+  referredMembers?: Prisma.MemberReferralUpdateManyWithoutReferredUserNestedInput
+  businessReferrals?: Prisma.BusinessReferralUpdateManyWithoutReferrerOwnerNestedInput
+}
+
+export type UserUncheckedUpdateWithoutMemberProfileInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  ownedBusinesses?: Prisma.BusinessUncheckedUpdateManyWithoutOwnerNestedInput
+  staffRoles?: Prisma.BusinessStaffUncheckedUpdateManyWithoutUserNestedInput
+  sentMessages?: Prisma.ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+  trainerProfile?: Prisma.TrainerProfileUncheckedUpdateOneWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutPayerNestedInput
+  progressLogs?: Prisma.ProgressLogUncheckedUpdateManyWithoutLoggedByUserNestedInput
+  attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutUserNestedInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationUncheckedUpdateManyWithoutReviewedByAdminNestedInput
+  referredMembers?: Prisma.MemberReferralUncheckedUpdateManyWithoutReferredUserNestedInput
+  businessReferrals?: Prisma.BusinessReferralUncheckedUpdateManyWithoutReferrerOwnerNestedInput
+}
+
+export type UserCreateWithoutReferredMembersInput = {
+  id?: string
+  fullName?: string | null
+  email: string
+  emailVerified?: boolean
+  profileImage?: string | null
+  role: $Enums.Role
+  isActive?: boolean
+  isVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  ownedBusinesses?: Prisma.BusinessCreateNestedManyWithoutOwnerInput
+  staffRoles?: Prisma.BusinessStaffCreateNestedManyWithoutUserInput
+  sentMessages?: Prisma.ChatMessageCreateNestedManyWithoutSenderInput
+  memberProfile?: Prisma.MemberProfileCreateNestedOneWithoutUserInput
+  trainerProfile?: Prisma.TrainerProfileCreateNestedOneWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutPayerInput
+  progressLogs?: Prisma.ProgressLogCreateNestedManyWithoutLoggedByUserInput
+  attendances?: Prisma.AttendanceCreateNestedManyWithoutUserInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationCreateNestedManyWithoutReviewedByAdminInput
+  businessReferrals?: Prisma.BusinessReferralCreateNestedManyWithoutReferrerOwnerInput
+}
+
+export type UserUncheckedCreateWithoutReferredMembersInput = {
+  id?: string
+  fullName?: string | null
+  email: string
+  emailVerified?: boolean
+  profileImage?: string | null
+  role: $Enums.Role
+  isActive?: boolean
+  isVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  ownedBusinesses?: Prisma.BusinessUncheckedCreateNestedManyWithoutOwnerInput
+  staffRoles?: Prisma.BusinessStaffUncheckedCreateNestedManyWithoutUserInput
+  sentMessages?: Prisma.ChatMessageUncheckedCreateNestedManyWithoutSenderInput
+  memberProfile?: Prisma.MemberProfileUncheckedCreateNestedOneWithoutUserInput
+  trainerProfile?: Prisma.TrainerProfileUncheckedCreateNestedOneWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutPayerInput
+  progressLogs?: Prisma.ProgressLogUncheckedCreateNestedManyWithoutLoggedByUserInput
+  attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutUserInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationUncheckedCreateNestedManyWithoutReviewedByAdminInput
+  businessReferrals?: Prisma.BusinessReferralUncheckedCreateNestedManyWithoutReferrerOwnerInput
+}
+
+export type UserCreateOrConnectWithoutReferredMembersInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutReferredMembersInput, Prisma.UserUncheckedCreateWithoutReferredMembersInput>
+}
+
+export type UserUpsertWithoutReferredMembersInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutReferredMembersInput, Prisma.UserUncheckedUpdateWithoutReferredMembersInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutReferredMembersInput, Prisma.UserUncheckedCreateWithoutReferredMembersInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutReferredMembersInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutReferredMembersInput, Prisma.UserUncheckedUpdateWithoutReferredMembersInput>
+}
+
+export type UserUpdateWithoutReferredMembersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  ownedBusinesses?: Prisma.BusinessUpdateManyWithoutOwnerNestedInput
+  staffRoles?: Prisma.BusinessStaffUpdateManyWithoutUserNestedInput
+  sentMessages?: Prisma.ChatMessageUpdateManyWithoutSenderNestedInput
+  memberProfile?: Prisma.MemberProfileUpdateOneWithoutUserNestedInput
+  trainerProfile?: Prisma.TrainerProfileUpdateOneWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutPayerNestedInput
+  progressLogs?: Prisma.ProgressLogUpdateManyWithoutLoggedByUserNestedInput
+  attendances?: Prisma.AttendanceUpdateManyWithoutUserNestedInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationUpdateManyWithoutReviewedByAdminNestedInput
+  businessReferrals?: Prisma.BusinessReferralUpdateManyWithoutReferrerOwnerNestedInput
+}
+
+export type UserUncheckedUpdateWithoutReferredMembersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  ownedBusinesses?: Prisma.BusinessUncheckedUpdateManyWithoutOwnerNestedInput
+  staffRoles?: Prisma.BusinessStaffUncheckedUpdateManyWithoutUserNestedInput
+  sentMessages?: Prisma.ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+  memberProfile?: Prisma.MemberProfileUncheckedUpdateOneWithoutUserNestedInput
+  trainerProfile?: Prisma.TrainerProfileUncheckedUpdateOneWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutPayerNestedInput
+  progressLogs?: Prisma.ProgressLogUncheckedUpdateManyWithoutLoggedByUserNestedInput
+  attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutUserNestedInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationUncheckedUpdateManyWithoutReviewedByAdminNestedInput
+  businessReferrals?: Prisma.BusinessReferralUncheckedUpdateManyWithoutReferrerOwnerNestedInput
+}
+
+export type UserCreateWithoutNotificationsInput = {
+  id?: string
+  fullName?: string | null
+  email: string
+  emailVerified?: boolean
+  profileImage?: string | null
+  role: $Enums.Role
+  isActive?: boolean
+  isVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  ownedBusinesses?: Prisma.BusinessCreateNestedManyWithoutOwnerInput
+  staffRoles?: Prisma.BusinessStaffCreateNestedManyWithoutUserInput
+  sentMessages?: Prisma.ChatMessageCreateNestedManyWithoutSenderInput
+  memberProfile?: Prisma.MemberProfileCreateNestedOneWithoutUserInput
+  trainerProfile?: Prisma.TrainerProfileCreateNestedOneWithoutUserInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutPayerInput
+  progressLogs?: Prisma.ProgressLogCreateNestedManyWithoutLoggedByUserInput
+  attendances?: Prisma.AttendanceCreateNestedManyWithoutUserInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationCreateNestedManyWithoutReviewedByAdminInput
+  referredMembers?: Prisma.MemberReferralCreateNestedManyWithoutReferredUserInput
+  businessReferrals?: Prisma.BusinessReferralCreateNestedManyWithoutReferrerOwnerInput
+}
+
+export type UserUncheckedCreateWithoutNotificationsInput = {
+  id?: string
+  fullName?: string | null
+  email: string
+  emailVerified?: boolean
+  profileImage?: string | null
+  role: $Enums.Role
+  isActive?: boolean
+  isVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  ownedBusinesses?: Prisma.BusinessUncheckedCreateNestedManyWithoutOwnerInput
+  staffRoles?: Prisma.BusinessStaffUncheckedCreateNestedManyWithoutUserInput
+  sentMessages?: Prisma.ChatMessageUncheckedCreateNestedManyWithoutSenderInput
+  memberProfile?: Prisma.MemberProfileUncheckedCreateNestedOneWithoutUserInput
+  trainerProfile?: Prisma.TrainerProfileUncheckedCreateNestedOneWithoutUserInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutPayerInput
+  progressLogs?: Prisma.ProgressLogUncheckedCreateNestedManyWithoutLoggedByUserInput
+  attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutUserInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationUncheckedCreateNestedManyWithoutReviewedByAdminInput
+  referredMembers?: Prisma.MemberReferralUncheckedCreateNestedManyWithoutReferredUserInput
+  businessReferrals?: Prisma.BusinessReferralUncheckedCreateNestedManyWithoutReferrerOwnerInput
+}
+
+export type UserCreateOrConnectWithoutNotificationsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
+}
+
+export type UserUpsertWithoutNotificationsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutNotificationsInput, Prisma.UserUncheckedUpdateWithoutNotificationsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutNotificationsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutNotificationsInput, Prisma.UserUncheckedUpdateWithoutNotificationsInput>
+}
+
+export type UserUpdateWithoutNotificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  ownedBusinesses?: Prisma.BusinessUpdateManyWithoutOwnerNestedInput
+  staffRoles?: Prisma.BusinessStaffUpdateManyWithoutUserNestedInput
+  sentMessages?: Prisma.ChatMessageUpdateManyWithoutSenderNestedInput
+  memberProfile?: Prisma.MemberProfileUpdateOneWithoutUserNestedInput
+  trainerProfile?: Prisma.TrainerProfileUpdateOneWithoutUserNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutPayerNestedInput
+  progressLogs?: Prisma.ProgressLogUpdateManyWithoutLoggedByUserNestedInput
+  attendances?: Prisma.AttendanceUpdateManyWithoutUserNestedInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationUpdateManyWithoutReviewedByAdminNestedInput
+  referredMembers?: Prisma.MemberReferralUpdateManyWithoutReferredUserNestedInput
+  businessReferrals?: Prisma.BusinessReferralUpdateManyWithoutReferrerOwnerNestedInput
+}
+
+export type UserUncheckedUpdateWithoutNotificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  ownedBusinesses?: Prisma.BusinessUncheckedUpdateManyWithoutOwnerNestedInput
+  staffRoles?: Prisma.BusinessStaffUncheckedUpdateManyWithoutUserNestedInput
+  sentMessages?: Prisma.ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+  memberProfile?: Prisma.MemberProfileUncheckedUpdateOneWithoutUserNestedInput
+  trainerProfile?: Prisma.TrainerProfileUncheckedUpdateOneWithoutUserNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutPayerNestedInput
+  progressLogs?: Prisma.ProgressLogUncheckedUpdateManyWithoutLoggedByUserNestedInput
+  attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutUserNestedInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationUncheckedUpdateManyWithoutReviewedByAdminNestedInput
+  referredMembers?: Prisma.MemberReferralUncheckedUpdateManyWithoutReferredUserNestedInput
+  businessReferrals?: Prisma.BusinessReferralUncheckedUpdateManyWithoutReferrerOwnerNestedInput
+}
+
+export type UserCreateWithoutPaymentsInput = {
+  id?: string
+  fullName?: string | null
+  email: string
+  emailVerified?: boolean
+  profileImage?: string | null
+  role: $Enums.Role
+  isActive?: boolean
+  isVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  ownedBusinesses?: Prisma.BusinessCreateNestedManyWithoutOwnerInput
+  staffRoles?: Prisma.BusinessStaffCreateNestedManyWithoutUserInput
+  sentMessages?: Prisma.ChatMessageCreateNestedManyWithoutSenderInput
+  memberProfile?: Prisma.MemberProfileCreateNestedOneWithoutUserInput
+  trainerProfile?: Prisma.TrainerProfileCreateNestedOneWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  progressLogs?: Prisma.ProgressLogCreateNestedManyWithoutLoggedByUserInput
+  attendances?: Prisma.AttendanceCreateNestedManyWithoutUserInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationCreateNestedManyWithoutReviewedByAdminInput
+  referredMembers?: Prisma.MemberReferralCreateNestedManyWithoutReferredUserInput
+  businessReferrals?: Prisma.BusinessReferralCreateNestedManyWithoutReferrerOwnerInput
+}
+
+export type UserUncheckedCreateWithoutPaymentsInput = {
+  id?: string
+  fullName?: string | null
+  email: string
+  emailVerified?: boolean
+  profileImage?: string | null
+  role: $Enums.Role
+  isActive?: boolean
+  isVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  ownedBusinesses?: Prisma.BusinessUncheckedCreateNestedManyWithoutOwnerInput
+  staffRoles?: Prisma.BusinessStaffUncheckedCreateNestedManyWithoutUserInput
+  sentMessages?: Prisma.ChatMessageUncheckedCreateNestedManyWithoutSenderInput
+  memberProfile?: Prisma.MemberProfileUncheckedCreateNestedOneWithoutUserInput
+  trainerProfile?: Prisma.TrainerProfileUncheckedCreateNestedOneWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  progressLogs?: Prisma.ProgressLogUncheckedCreateNestedManyWithoutLoggedByUserInput
+  attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutUserInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationUncheckedCreateNestedManyWithoutReviewedByAdminInput
+  referredMembers?: Prisma.MemberReferralUncheckedCreateNestedManyWithoutReferredUserInput
+  businessReferrals?: Prisma.BusinessReferralUncheckedCreateNestedManyWithoutReferrerOwnerInput
+}
+
+export type UserCreateOrConnectWithoutPaymentsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutPaymentsInput, Prisma.UserUncheckedCreateWithoutPaymentsInput>
+}
+
+export type UserUpsertWithoutPaymentsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutPaymentsInput, Prisma.UserUncheckedUpdateWithoutPaymentsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutPaymentsInput, Prisma.UserUncheckedCreateWithoutPaymentsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutPaymentsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutPaymentsInput, Prisma.UserUncheckedUpdateWithoutPaymentsInput>
+}
+
+export type UserUpdateWithoutPaymentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  ownedBusinesses?: Prisma.BusinessUpdateManyWithoutOwnerNestedInput
+  staffRoles?: Prisma.BusinessStaffUpdateManyWithoutUserNestedInput
+  sentMessages?: Prisma.ChatMessageUpdateManyWithoutSenderNestedInput
+  memberProfile?: Prisma.MemberProfileUpdateOneWithoutUserNestedInput
+  trainerProfile?: Prisma.TrainerProfileUpdateOneWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  progressLogs?: Prisma.ProgressLogUpdateManyWithoutLoggedByUserNestedInput
+  attendances?: Prisma.AttendanceUpdateManyWithoutUserNestedInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationUpdateManyWithoutReviewedByAdminNestedInput
+  referredMembers?: Prisma.MemberReferralUpdateManyWithoutReferredUserNestedInput
+  businessReferrals?: Prisma.BusinessReferralUpdateManyWithoutReferrerOwnerNestedInput
+}
+
+export type UserUncheckedUpdateWithoutPaymentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  ownedBusinesses?: Prisma.BusinessUncheckedUpdateManyWithoutOwnerNestedInput
+  staffRoles?: Prisma.BusinessStaffUncheckedUpdateManyWithoutUserNestedInput
+  sentMessages?: Prisma.ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+  memberProfile?: Prisma.MemberProfileUncheckedUpdateOneWithoutUserNestedInput
+  trainerProfile?: Prisma.TrainerProfileUncheckedUpdateOneWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  progressLogs?: Prisma.ProgressLogUncheckedUpdateManyWithoutLoggedByUserNestedInput
+  attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutUserNestedInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationUncheckedUpdateManyWithoutReviewedByAdminNestedInput
+  referredMembers?: Prisma.MemberReferralUncheckedUpdateManyWithoutReferredUserNestedInput
+  businessReferrals?: Prisma.BusinessReferralUncheckedUpdateManyWithoutReferrerOwnerNestedInput
+}
+
+export type UserCreateWithoutProgressLogsInput = {
+  id?: string
+  fullName?: string | null
+  email: string
+  emailVerified?: boolean
+  profileImage?: string | null
+  role: $Enums.Role
+  isActive?: boolean
+  isVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  ownedBusinesses?: Prisma.BusinessCreateNestedManyWithoutOwnerInput
+  staffRoles?: Prisma.BusinessStaffCreateNestedManyWithoutUserInput
+  sentMessages?: Prisma.ChatMessageCreateNestedManyWithoutSenderInput
+  memberProfile?: Prisma.MemberProfileCreateNestedOneWithoutUserInput
+  trainerProfile?: Prisma.TrainerProfileCreateNestedOneWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutPayerInput
+  attendances?: Prisma.AttendanceCreateNestedManyWithoutUserInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationCreateNestedManyWithoutReviewedByAdminInput
+  referredMembers?: Prisma.MemberReferralCreateNestedManyWithoutReferredUserInput
+  businessReferrals?: Prisma.BusinessReferralCreateNestedManyWithoutReferrerOwnerInput
+}
+
+export type UserUncheckedCreateWithoutProgressLogsInput = {
+  id?: string
+  fullName?: string | null
+  email: string
+  emailVerified?: boolean
+  profileImage?: string | null
+  role: $Enums.Role
+  isActive?: boolean
+  isVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  ownedBusinesses?: Prisma.BusinessUncheckedCreateNestedManyWithoutOwnerInput
+  staffRoles?: Prisma.BusinessStaffUncheckedCreateNestedManyWithoutUserInput
+  sentMessages?: Prisma.ChatMessageUncheckedCreateNestedManyWithoutSenderInput
+  memberProfile?: Prisma.MemberProfileUncheckedCreateNestedOneWithoutUserInput
+  trainerProfile?: Prisma.TrainerProfileUncheckedCreateNestedOneWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutPayerInput
+  attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutUserInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationUncheckedCreateNestedManyWithoutReviewedByAdminInput
+  referredMembers?: Prisma.MemberReferralUncheckedCreateNestedManyWithoutReferredUserInput
+  businessReferrals?: Prisma.BusinessReferralUncheckedCreateNestedManyWithoutReferrerOwnerInput
+}
+
+export type UserCreateOrConnectWithoutProgressLogsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutProgressLogsInput, Prisma.UserUncheckedCreateWithoutProgressLogsInput>
+}
+
+export type UserUpsertWithoutProgressLogsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutProgressLogsInput, Prisma.UserUncheckedUpdateWithoutProgressLogsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutProgressLogsInput, Prisma.UserUncheckedCreateWithoutProgressLogsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutProgressLogsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutProgressLogsInput, Prisma.UserUncheckedUpdateWithoutProgressLogsInput>
+}
+
+export type UserUpdateWithoutProgressLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  ownedBusinesses?: Prisma.BusinessUpdateManyWithoutOwnerNestedInput
+  staffRoles?: Prisma.BusinessStaffUpdateManyWithoutUserNestedInput
+  sentMessages?: Prisma.ChatMessageUpdateManyWithoutSenderNestedInput
+  memberProfile?: Prisma.MemberProfileUpdateOneWithoutUserNestedInput
+  trainerProfile?: Prisma.TrainerProfileUpdateOneWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutPayerNestedInput
+  attendances?: Prisma.AttendanceUpdateManyWithoutUserNestedInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationUpdateManyWithoutReviewedByAdminNestedInput
+  referredMembers?: Prisma.MemberReferralUpdateManyWithoutReferredUserNestedInput
+  businessReferrals?: Prisma.BusinessReferralUpdateManyWithoutReferrerOwnerNestedInput
+}
+
+export type UserUncheckedUpdateWithoutProgressLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  ownedBusinesses?: Prisma.BusinessUncheckedUpdateManyWithoutOwnerNestedInput
+  staffRoles?: Prisma.BusinessStaffUncheckedUpdateManyWithoutUserNestedInput
+  sentMessages?: Prisma.ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+  memberProfile?: Prisma.MemberProfileUncheckedUpdateOneWithoutUserNestedInput
+  trainerProfile?: Prisma.TrainerProfileUncheckedUpdateOneWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutPayerNestedInput
+  attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutUserNestedInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationUncheckedUpdateManyWithoutReviewedByAdminNestedInput
+  referredMembers?: Prisma.MemberReferralUncheckedUpdateManyWithoutReferredUserNestedInput
+  businessReferrals?: Prisma.BusinessReferralUncheckedUpdateManyWithoutReferrerOwnerNestedInput
+}
+
+export type UserCreateWithoutAdminReviewedCertificationsInput = {
+  id?: string
+  fullName?: string | null
+  email: string
+  emailVerified?: boolean
+  profileImage?: string | null
+  role: $Enums.Role
+  isActive?: boolean
+  isVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  ownedBusinesses?: Prisma.BusinessCreateNestedManyWithoutOwnerInput
+  staffRoles?: Prisma.BusinessStaffCreateNestedManyWithoutUserInput
+  sentMessages?: Prisma.ChatMessageCreateNestedManyWithoutSenderInput
+  memberProfile?: Prisma.MemberProfileCreateNestedOneWithoutUserInput
+  trainerProfile?: Prisma.TrainerProfileCreateNestedOneWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutPayerInput
+  progressLogs?: Prisma.ProgressLogCreateNestedManyWithoutLoggedByUserInput
+  attendances?: Prisma.AttendanceCreateNestedManyWithoutUserInput
+  referredMembers?: Prisma.MemberReferralCreateNestedManyWithoutReferredUserInput
+  businessReferrals?: Prisma.BusinessReferralCreateNestedManyWithoutReferrerOwnerInput
+}
+
+export type UserUncheckedCreateWithoutAdminReviewedCertificationsInput = {
+  id?: string
+  fullName?: string | null
+  email: string
+  emailVerified?: boolean
+  profileImage?: string | null
+  role: $Enums.Role
+  isActive?: boolean
+  isVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  ownedBusinesses?: Prisma.BusinessUncheckedCreateNestedManyWithoutOwnerInput
+  staffRoles?: Prisma.BusinessStaffUncheckedCreateNestedManyWithoutUserInput
+  sentMessages?: Prisma.ChatMessageUncheckedCreateNestedManyWithoutSenderInput
+  memberProfile?: Prisma.MemberProfileUncheckedCreateNestedOneWithoutUserInput
+  trainerProfile?: Prisma.TrainerProfileUncheckedCreateNestedOneWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutPayerInput
+  progressLogs?: Prisma.ProgressLogUncheckedCreateNestedManyWithoutLoggedByUserInput
+  attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutUserInput
+  referredMembers?: Prisma.MemberReferralUncheckedCreateNestedManyWithoutReferredUserInput
+  businessReferrals?: Prisma.BusinessReferralUncheckedCreateNestedManyWithoutReferrerOwnerInput
+}
+
+export type UserCreateOrConnectWithoutAdminReviewedCertificationsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutAdminReviewedCertificationsInput, Prisma.UserUncheckedCreateWithoutAdminReviewedCertificationsInput>
+}
+
+export type UserUpsertWithoutAdminReviewedCertificationsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAdminReviewedCertificationsInput, Prisma.UserUncheckedUpdateWithoutAdminReviewedCertificationsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAdminReviewedCertificationsInput, Prisma.UserUncheckedCreateWithoutAdminReviewedCertificationsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutAdminReviewedCertificationsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAdminReviewedCertificationsInput, Prisma.UserUncheckedUpdateWithoutAdminReviewedCertificationsInput>
+}
+
+export type UserUpdateWithoutAdminReviewedCertificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  ownedBusinesses?: Prisma.BusinessUpdateManyWithoutOwnerNestedInput
+  staffRoles?: Prisma.BusinessStaffUpdateManyWithoutUserNestedInput
+  sentMessages?: Prisma.ChatMessageUpdateManyWithoutSenderNestedInput
+  memberProfile?: Prisma.MemberProfileUpdateOneWithoutUserNestedInput
+  trainerProfile?: Prisma.TrainerProfileUpdateOneWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutPayerNestedInput
+  progressLogs?: Prisma.ProgressLogUpdateManyWithoutLoggedByUserNestedInput
+  attendances?: Prisma.AttendanceUpdateManyWithoutUserNestedInput
+  referredMembers?: Prisma.MemberReferralUpdateManyWithoutReferredUserNestedInput
+  businessReferrals?: Prisma.BusinessReferralUpdateManyWithoutReferrerOwnerNestedInput
+}
+
+export type UserUncheckedUpdateWithoutAdminReviewedCertificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  ownedBusinesses?: Prisma.BusinessUncheckedUpdateManyWithoutOwnerNestedInput
+  staffRoles?: Prisma.BusinessStaffUncheckedUpdateManyWithoutUserNestedInput
+  sentMessages?: Prisma.ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+  memberProfile?: Prisma.MemberProfileUncheckedUpdateOneWithoutUserNestedInput
+  trainerProfile?: Prisma.TrainerProfileUncheckedUpdateOneWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutPayerNestedInput
+  progressLogs?: Prisma.ProgressLogUncheckedUpdateManyWithoutLoggedByUserNestedInput
+  attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutUserNestedInput
+  referredMembers?: Prisma.MemberReferralUncheckedUpdateManyWithoutReferredUserNestedInput
+  businessReferrals?: Prisma.BusinessReferralUncheckedUpdateManyWithoutReferrerOwnerNestedInput
+}
+
+export type UserCreateWithoutTrainerProfileInput = {
+  id?: string
+  fullName?: string | null
+  email: string
+  emailVerified?: boolean
+  profileImage?: string | null
+  role: $Enums.Role
+  isActive?: boolean
+  isVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  ownedBusinesses?: Prisma.BusinessCreateNestedManyWithoutOwnerInput
+  staffRoles?: Prisma.BusinessStaffCreateNestedManyWithoutUserInput
+  sentMessages?: Prisma.ChatMessageCreateNestedManyWithoutSenderInput
+  memberProfile?: Prisma.MemberProfileCreateNestedOneWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutPayerInput
+  progressLogs?: Prisma.ProgressLogCreateNestedManyWithoutLoggedByUserInput
+  attendances?: Prisma.AttendanceCreateNestedManyWithoutUserInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationCreateNestedManyWithoutReviewedByAdminInput
+  referredMembers?: Prisma.MemberReferralCreateNestedManyWithoutReferredUserInput
+  businessReferrals?: Prisma.BusinessReferralCreateNestedManyWithoutReferrerOwnerInput
+}
+
+export type UserUncheckedCreateWithoutTrainerProfileInput = {
+  id?: string
+  fullName?: string | null
+  email: string
+  emailVerified?: boolean
+  profileImage?: string | null
+  role: $Enums.Role
+  isActive?: boolean
+  isVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  ownedBusinesses?: Prisma.BusinessUncheckedCreateNestedManyWithoutOwnerInput
+  staffRoles?: Prisma.BusinessStaffUncheckedCreateNestedManyWithoutUserInput
+  sentMessages?: Prisma.ChatMessageUncheckedCreateNestedManyWithoutSenderInput
+  memberProfile?: Prisma.MemberProfileUncheckedCreateNestedOneWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutPayerInput
+  progressLogs?: Prisma.ProgressLogUncheckedCreateNestedManyWithoutLoggedByUserInput
+  attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutUserInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationUncheckedCreateNestedManyWithoutReviewedByAdminInput
+  referredMembers?: Prisma.MemberReferralUncheckedCreateNestedManyWithoutReferredUserInput
+  businessReferrals?: Prisma.BusinessReferralUncheckedCreateNestedManyWithoutReferrerOwnerInput
+}
+
+export type UserCreateOrConnectWithoutTrainerProfileInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutTrainerProfileInput, Prisma.UserUncheckedCreateWithoutTrainerProfileInput>
+}
+
+export type UserUpsertWithoutTrainerProfileInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutTrainerProfileInput, Prisma.UserUncheckedUpdateWithoutTrainerProfileInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutTrainerProfileInput, Prisma.UserUncheckedCreateWithoutTrainerProfileInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutTrainerProfileInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutTrainerProfileInput, Prisma.UserUncheckedUpdateWithoutTrainerProfileInput>
+}
+
+export type UserUpdateWithoutTrainerProfileInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  ownedBusinesses?: Prisma.BusinessUpdateManyWithoutOwnerNestedInput
+  staffRoles?: Prisma.BusinessStaffUpdateManyWithoutUserNestedInput
+  sentMessages?: Prisma.ChatMessageUpdateManyWithoutSenderNestedInput
+  memberProfile?: Prisma.MemberProfileUpdateOneWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutPayerNestedInput
+  progressLogs?: Prisma.ProgressLogUpdateManyWithoutLoggedByUserNestedInput
+  attendances?: Prisma.AttendanceUpdateManyWithoutUserNestedInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationUpdateManyWithoutReviewedByAdminNestedInput
+  referredMembers?: Prisma.MemberReferralUpdateManyWithoutReferredUserNestedInput
+  businessReferrals?: Prisma.BusinessReferralUpdateManyWithoutReferrerOwnerNestedInput
+}
+
+export type UserUncheckedUpdateWithoutTrainerProfileInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  ownedBusinesses?: Prisma.BusinessUncheckedUpdateManyWithoutOwnerNestedInput
+  staffRoles?: Prisma.BusinessStaffUncheckedUpdateManyWithoutUserNestedInput
+  sentMessages?: Prisma.ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+  memberProfile?: Prisma.MemberProfileUncheckedUpdateOneWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutPayerNestedInput
+  progressLogs?: Prisma.ProgressLogUncheckedUpdateManyWithoutLoggedByUserNestedInput
+  attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutUserNestedInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationUncheckedUpdateManyWithoutReviewedByAdminNestedInput
+  referredMembers?: Prisma.MemberReferralUncheckedUpdateManyWithoutReferredUserNestedInput
+  businessReferrals?: Prisma.BusinessReferralUncheckedUpdateManyWithoutReferrerOwnerNestedInput
 }
 
 export type UserCreateWithoutSessionsInput = {
@@ -740,17 +2170,25 @@ export type UserCreateWithoutSessionsInput = {
   fullName?: string | null
   email: string
   emailVerified?: boolean
-  bio?: string | null
   profileImage?: string | null
-  fcmToken?: string | null
-  role?: $Enums.UserRole
+  role: $Enums.Role
   isActive?: boolean
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
-  sentNotifications?: Prisma.NotificationCreateNestedManyWithoutSenderInput
-  receivedNotifications?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
+  ownedBusinesses?: Prisma.BusinessCreateNestedManyWithoutOwnerInput
+  staffRoles?: Prisma.BusinessStaffCreateNestedManyWithoutUserInput
+  sentMessages?: Prisma.ChatMessageCreateNestedManyWithoutSenderInput
+  memberProfile?: Prisma.MemberProfileCreateNestedOneWithoutUserInput
+  trainerProfile?: Prisma.TrainerProfileCreateNestedOneWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutPayerInput
+  progressLogs?: Prisma.ProgressLogCreateNestedManyWithoutLoggedByUserInput
+  attendances?: Prisma.AttendanceCreateNestedManyWithoutUserInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationCreateNestedManyWithoutReviewedByAdminInput
+  referredMembers?: Prisma.MemberReferralCreateNestedManyWithoutReferredUserInput
+  businessReferrals?: Prisma.BusinessReferralCreateNestedManyWithoutReferrerOwnerInput
 }
 
 export type UserUncheckedCreateWithoutSessionsInput = {
@@ -758,17 +2196,25 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   fullName?: string | null
   email: string
   emailVerified?: boolean
-  bio?: string | null
   profileImage?: string | null
-  fcmToken?: string | null
-  role?: $Enums.UserRole
+  role: $Enums.Role
   isActive?: boolean
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
-  sentNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput
-  receivedNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
+  ownedBusinesses?: Prisma.BusinessUncheckedCreateNestedManyWithoutOwnerInput
+  staffRoles?: Prisma.BusinessStaffUncheckedCreateNestedManyWithoutUserInput
+  sentMessages?: Prisma.ChatMessageUncheckedCreateNestedManyWithoutSenderInput
+  memberProfile?: Prisma.MemberProfileUncheckedCreateNestedOneWithoutUserInput
+  trainerProfile?: Prisma.TrainerProfileUncheckedCreateNestedOneWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutPayerInput
+  progressLogs?: Prisma.ProgressLogUncheckedCreateNestedManyWithoutLoggedByUserInput
+  attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutUserInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationUncheckedCreateNestedManyWithoutReviewedByAdminInput
+  referredMembers?: Prisma.MemberReferralUncheckedCreateNestedManyWithoutReferredUserInput
+  businessReferrals?: Prisma.BusinessReferralUncheckedCreateNestedManyWithoutReferrerOwnerInput
 }
 
 export type UserCreateOrConnectWithoutSessionsInput = {
@@ -792,17 +2238,25 @@ export type UserUpdateWithoutSessionsInput = {
   fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
-  sentNotifications?: Prisma.NotificationUpdateManyWithoutSenderNestedInput
-  receivedNotifications?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
+  ownedBusinesses?: Prisma.BusinessUpdateManyWithoutOwnerNestedInput
+  staffRoles?: Prisma.BusinessStaffUpdateManyWithoutUserNestedInput
+  sentMessages?: Prisma.ChatMessageUpdateManyWithoutSenderNestedInput
+  memberProfile?: Prisma.MemberProfileUpdateOneWithoutUserNestedInput
+  trainerProfile?: Prisma.TrainerProfileUpdateOneWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutPayerNestedInput
+  progressLogs?: Prisma.ProgressLogUpdateManyWithoutLoggedByUserNestedInput
+  attendances?: Prisma.AttendanceUpdateManyWithoutUserNestedInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationUpdateManyWithoutReviewedByAdminNestedInput
+  referredMembers?: Prisma.MemberReferralUpdateManyWithoutReferredUserNestedInput
+  businessReferrals?: Prisma.BusinessReferralUpdateManyWithoutReferrerOwnerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -810,17 +2264,25 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
-  sentNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput
-  receivedNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
+  ownedBusinesses?: Prisma.BusinessUncheckedUpdateManyWithoutOwnerNestedInput
+  staffRoles?: Prisma.BusinessStaffUncheckedUpdateManyWithoutUserNestedInput
+  sentMessages?: Prisma.ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+  memberProfile?: Prisma.MemberProfileUncheckedUpdateOneWithoutUserNestedInput
+  trainerProfile?: Prisma.TrainerProfileUncheckedUpdateOneWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutPayerNestedInput
+  progressLogs?: Prisma.ProgressLogUncheckedUpdateManyWithoutLoggedByUserNestedInput
+  attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutUserNestedInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationUncheckedUpdateManyWithoutReviewedByAdminNestedInput
+  referredMembers?: Prisma.MemberReferralUncheckedUpdateManyWithoutReferredUserNestedInput
+  businessReferrals?: Prisma.BusinessReferralUncheckedUpdateManyWithoutReferrerOwnerNestedInput
 }
 
 export type UserCreateWithoutAccountsInput = {
@@ -828,17 +2290,25 @@ export type UserCreateWithoutAccountsInput = {
   fullName?: string | null
   email: string
   emailVerified?: boolean
-  bio?: string | null
   profileImage?: string | null
-  fcmToken?: string | null
-  role?: $Enums.UserRole
+  role: $Enums.Role
   isActive?: boolean
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
-  sentNotifications?: Prisma.NotificationCreateNestedManyWithoutSenderInput
-  receivedNotifications?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
+  ownedBusinesses?: Prisma.BusinessCreateNestedManyWithoutOwnerInput
+  staffRoles?: Prisma.BusinessStaffCreateNestedManyWithoutUserInput
+  sentMessages?: Prisma.ChatMessageCreateNestedManyWithoutSenderInput
+  memberProfile?: Prisma.MemberProfileCreateNestedOneWithoutUserInput
+  trainerProfile?: Prisma.TrainerProfileCreateNestedOneWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutPayerInput
+  progressLogs?: Prisma.ProgressLogCreateNestedManyWithoutLoggedByUserInput
+  attendances?: Prisma.AttendanceCreateNestedManyWithoutUserInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationCreateNestedManyWithoutReviewedByAdminInput
+  referredMembers?: Prisma.MemberReferralCreateNestedManyWithoutReferredUserInput
+  businessReferrals?: Prisma.BusinessReferralCreateNestedManyWithoutReferrerOwnerInput
 }
 
 export type UserUncheckedCreateWithoutAccountsInput = {
@@ -846,17 +2316,25 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   fullName?: string | null
   email: string
   emailVerified?: boolean
-  bio?: string | null
   profileImage?: string | null
-  fcmToken?: string | null
-  role?: $Enums.UserRole
+  role: $Enums.Role
   isActive?: boolean
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
-  sentNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput
-  receivedNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
+  ownedBusinesses?: Prisma.BusinessUncheckedCreateNestedManyWithoutOwnerInput
+  staffRoles?: Prisma.BusinessStaffUncheckedCreateNestedManyWithoutUserInput
+  sentMessages?: Prisma.ChatMessageUncheckedCreateNestedManyWithoutSenderInput
+  memberProfile?: Prisma.MemberProfileUncheckedCreateNestedOneWithoutUserInput
+  trainerProfile?: Prisma.TrainerProfileUncheckedCreateNestedOneWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutPayerInput
+  progressLogs?: Prisma.ProgressLogUncheckedCreateNestedManyWithoutLoggedByUserInput
+  attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutUserInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationUncheckedCreateNestedManyWithoutReviewedByAdminInput
+  referredMembers?: Prisma.MemberReferralUncheckedCreateNestedManyWithoutReferredUserInput
+  businessReferrals?: Prisma.BusinessReferralUncheckedCreateNestedManyWithoutReferrerOwnerInput
 }
 
 export type UserCreateOrConnectWithoutAccountsInput = {
@@ -880,17 +2358,25 @@ export type UserUpdateWithoutAccountsInput = {
   fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
-  sentNotifications?: Prisma.NotificationUpdateManyWithoutSenderNestedInput
-  receivedNotifications?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
+  ownedBusinesses?: Prisma.BusinessUpdateManyWithoutOwnerNestedInput
+  staffRoles?: Prisma.BusinessStaffUpdateManyWithoutUserNestedInput
+  sentMessages?: Prisma.ChatMessageUpdateManyWithoutSenderNestedInput
+  memberProfile?: Prisma.MemberProfileUpdateOneWithoutUserNestedInput
+  trainerProfile?: Prisma.TrainerProfileUpdateOneWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutPayerNestedInput
+  progressLogs?: Prisma.ProgressLogUpdateManyWithoutLoggedByUserNestedInput
+  attendances?: Prisma.AttendanceUpdateManyWithoutUserNestedInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationUpdateManyWithoutReviewedByAdminNestedInput
+  referredMembers?: Prisma.MemberReferralUpdateManyWithoutReferredUserNestedInput
+  businessReferrals?: Prisma.BusinessReferralUpdateManyWithoutReferrerOwnerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -898,17 +2384,25 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
-  sentNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput
-  receivedNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
+  ownedBusinesses?: Prisma.BusinessUncheckedUpdateManyWithoutOwnerNestedInput
+  staffRoles?: Prisma.BusinessStaffUncheckedUpdateManyWithoutUserNestedInput
+  sentMessages?: Prisma.ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+  memberProfile?: Prisma.MemberProfileUncheckedUpdateOneWithoutUserNestedInput
+  trainerProfile?: Prisma.TrainerProfileUncheckedUpdateOneWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutPayerNestedInput
+  progressLogs?: Prisma.ProgressLogUncheckedUpdateManyWithoutLoggedByUserNestedInput
+  attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutUserNestedInput
+  adminReviewedCertifications?: Prisma.TrainerCertificationUncheckedUpdateManyWithoutReviewedByAdminNestedInput
+  referredMembers?: Prisma.MemberReferralUncheckedUpdateManyWithoutReferredUserNestedInput
+  businessReferrals?: Prisma.BusinessReferralUncheckedUpdateManyWithoutReferrerOwnerNestedInput
 }
 
 
@@ -919,15 +2413,31 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
 export type UserCountOutputType = {
   sessions: number
   accounts: number
-  sentNotifications: number
-  receivedNotifications: number
+  ownedBusinesses: number
+  staffRoles: number
+  sentMessages: number
+  notifications: number
+  payments: number
+  progressLogs: number
+  attendances: number
+  adminReviewedCertifications: number
+  referredMembers: number
+  businessReferrals: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sessions?: boolean | UserCountOutputTypeCountSessionsArgs
   accounts?: boolean | UserCountOutputTypeCountAccountsArgs
-  sentNotifications?: boolean | UserCountOutputTypeCountSentNotificationsArgs
-  receivedNotifications?: boolean | UserCountOutputTypeCountReceivedNotificationsArgs
+  ownedBusinesses?: boolean | UserCountOutputTypeCountOwnedBusinessesArgs
+  staffRoles?: boolean | UserCountOutputTypeCountStaffRolesArgs
+  sentMessages?: boolean | UserCountOutputTypeCountSentMessagesArgs
+  notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
+  payments?: boolean | UserCountOutputTypeCountPaymentsArgs
+  progressLogs?: boolean | UserCountOutputTypeCountProgressLogsArgs
+  attendances?: boolean | UserCountOutputTypeCountAttendancesArgs
+  adminReviewedCertifications?: boolean | UserCountOutputTypeCountAdminReviewedCertificationsArgs
+  referredMembers?: boolean | UserCountOutputTypeCountReferredMembersArgs
+  businessReferrals?: boolean | UserCountOutputTypeCountBusinessReferralsArgs
 }
 
 /**
@@ -957,15 +2467,71 @@ export type UserCountOutputTypeCountAccountsArgs<ExtArgs extends runtime.Types.E
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountSentNotificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type UserCountOutputTypeCountOwnedBusinessesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.BusinessWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountStaffRolesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.BusinessStaffWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountSentMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ChatMessageWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountNotificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.NotificationWhereInput
 }
 
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountReceivedNotificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.NotificationWhereInput
+export type UserCountOutputTypeCountPaymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PaymentWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountProgressLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ProgressLogWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountAttendancesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AttendanceWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountAdminReviewedCertificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TrainerCertificationWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountReferredMembersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MemberReferralWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountBusinessReferralsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.BusinessReferralWhereInput
 }
 
 
@@ -974,9 +2540,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   fullName?: boolean
   email?: boolean
   emailVerified?: boolean
-  bio?: boolean
   profileImage?: boolean
-  fcmToken?: boolean
   role?: boolean
   isActive?: boolean
   isVerified?: boolean
@@ -984,8 +2548,18 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   updatedAt?: boolean
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
-  sentNotifications?: boolean | Prisma.User$sentNotificationsArgs<ExtArgs>
-  receivedNotifications?: boolean | Prisma.User$receivedNotificationsArgs<ExtArgs>
+  ownedBusinesses?: boolean | Prisma.User$ownedBusinessesArgs<ExtArgs>
+  staffRoles?: boolean | Prisma.User$staffRolesArgs<ExtArgs>
+  sentMessages?: boolean | Prisma.User$sentMessagesArgs<ExtArgs>
+  memberProfile?: boolean | Prisma.User$memberProfileArgs<ExtArgs>
+  trainerProfile?: boolean | Prisma.User$trainerProfileArgs<ExtArgs>
+  notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
+  payments?: boolean | Prisma.User$paymentsArgs<ExtArgs>
+  progressLogs?: boolean | Prisma.User$progressLogsArgs<ExtArgs>
+  attendances?: boolean | Prisma.User$attendancesArgs<ExtArgs>
+  adminReviewedCertifications?: boolean | Prisma.User$adminReviewedCertificationsArgs<ExtArgs>
+  referredMembers?: boolean | Prisma.User$referredMembersArgs<ExtArgs>
+  businessReferrals?: boolean | Prisma.User$businessReferralsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -994,9 +2568,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   fullName?: boolean
   email?: boolean
   emailVerified?: boolean
-  bio?: boolean
   profileImage?: boolean
-  fcmToken?: boolean
   role?: boolean
   isActive?: boolean
   isVerified?: boolean
@@ -1009,9 +2581,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   fullName?: boolean
   email?: boolean
   emailVerified?: boolean
-  bio?: boolean
   profileImage?: boolean
-  fcmToken?: boolean
   role?: boolean
   isActive?: boolean
   isVerified?: boolean
@@ -1024,9 +2594,7 @@ export type UserSelectScalar = {
   fullName?: boolean
   email?: boolean
   emailVerified?: boolean
-  bio?: boolean
   profileImage?: boolean
-  fcmToken?: boolean
   role?: boolean
   isActive?: boolean
   isVerified?: boolean
@@ -1034,12 +2602,22 @@ export type UserSelectScalar = {
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "fullName" | "email" | "emailVerified" | "bio" | "profileImage" | "fcmToken" | "role" | "isActive" | "isVerified" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "fullName" | "email" | "emailVerified" | "profileImage" | "role" | "isActive" | "isVerified" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
-  sentNotifications?: boolean | Prisma.User$sentNotificationsArgs<ExtArgs>
-  receivedNotifications?: boolean | Prisma.User$receivedNotificationsArgs<ExtArgs>
+  ownedBusinesses?: boolean | Prisma.User$ownedBusinessesArgs<ExtArgs>
+  staffRoles?: boolean | Prisma.User$staffRolesArgs<ExtArgs>
+  sentMessages?: boolean | Prisma.User$sentMessagesArgs<ExtArgs>
+  memberProfile?: boolean | Prisma.User$memberProfileArgs<ExtArgs>
+  trainerProfile?: boolean | Prisma.User$trainerProfileArgs<ExtArgs>
+  notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
+  payments?: boolean | Prisma.User$paymentsArgs<ExtArgs>
+  progressLogs?: boolean | Prisma.User$progressLogsArgs<ExtArgs>
+  attendances?: boolean | Prisma.User$attendancesArgs<ExtArgs>
+  adminReviewedCertifications?: boolean | Prisma.User$adminReviewedCertificationsArgs<ExtArgs>
+  referredMembers?: boolean | Prisma.User$referredMembersArgs<ExtArgs>
+  businessReferrals?: boolean | Prisma.User$businessReferralsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1050,18 +2628,26 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   objects: {
     sessions: Prisma.$SessionPayload<ExtArgs>[]
     accounts: Prisma.$AccountPayload<ExtArgs>[]
-    sentNotifications: Prisma.$NotificationPayload<ExtArgs>[]
-    receivedNotifications: Prisma.$NotificationPayload<ExtArgs>[]
+    ownedBusinesses: Prisma.$BusinessPayload<ExtArgs>[]
+    staffRoles: Prisma.$BusinessStaffPayload<ExtArgs>[]
+    sentMessages: Prisma.$ChatMessagePayload<ExtArgs>[]
+    memberProfile: Prisma.$MemberProfilePayload<ExtArgs> | null
+    trainerProfile: Prisma.$TrainerProfilePayload<ExtArgs> | null
+    notifications: Prisma.$NotificationPayload<ExtArgs>[]
+    payments: Prisma.$PaymentPayload<ExtArgs>[]
+    progressLogs: Prisma.$ProgressLogPayload<ExtArgs>[]
+    attendances: Prisma.$AttendancePayload<ExtArgs>[]
+    adminReviewedCertifications: Prisma.$TrainerCertificationPayload<ExtArgs>[]
+    referredMembers: Prisma.$MemberReferralPayload<ExtArgs>[]
+    businessReferrals: Prisma.$BusinessReferralPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     fullName: string | null
     email: string
     emailVerified: boolean
-    bio: string | null
     profileImage: string | null
-    fcmToken: string | null
-    role: $Enums.UserRole
+    role: $Enums.Role
     isActive: boolean
     isVerified: boolean
     createdAt: Date
@@ -1462,8 +3048,18 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   readonly [Symbol.toStringTag]: "PrismaPromise"
   sessions<T extends Prisma.User$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   accounts<T extends Prisma.User$accountsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  sentNotifications<T extends Prisma.User$sentNotificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sentNotificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  receivedNotifications<T extends Prisma.User$receivedNotificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$receivedNotificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  ownedBusinesses<T extends Prisma.User$ownedBusinessesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$ownedBusinessesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BusinessPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  staffRoles<T extends Prisma.User$staffRolesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$staffRolesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BusinessStaffPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  sentMessages<T extends Prisma.User$sentMessagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sentMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChatMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  memberProfile<T extends Prisma.User$memberProfileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$memberProfileArgs<ExtArgs>>): Prisma.Prisma__MemberProfileClient<runtime.Types.Result.GetResult<Prisma.$MemberProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  trainerProfile<T extends Prisma.User$trainerProfileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$trainerProfileArgs<ExtArgs>>): Prisma.Prisma__TrainerProfileClient<runtime.Types.Result.GetResult<Prisma.$TrainerProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  notifications<T extends Prisma.User$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  payments<T extends Prisma.User$paymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  progressLogs<T extends Prisma.User$progressLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$progressLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProgressLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  attendances<T extends Prisma.User$attendancesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$attendancesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AttendancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  adminReviewedCertifications<T extends Prisma.User$adminReviewedCertificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$adminReviewedCertificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TrainerCertificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  referredMembers<T extends Prisma.User$referredMembersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$referredMembersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MemberReferralPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  businessReferrals<T extends Prisma.User$businessReferralsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$businessReferralsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BusinessReferralPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1497,10 +3093,8 @@ export interface UserFieldRefs {
   readonly fullName: Prisma.FieldRef<"User", 'String'>
   readonly email: Prisma.FieldRef<"User", 'String'>
   readonly emailVerified: Prisma.FieldRef<"User", 'Boolean'>
-  readonly bio: Prisma.FieldRef<"User", 'String'>
   readonly profileImage: Prisma.FieldRef<"User", 'String'>
-  readonly fcmToken: Prisma.FieldRef<"User", 'String'>
-  readonly role: Prisma.FieldRef<"User", 'UserRole'>
+  readonly role: Prisma.FieldRef<"User", 'Role'>
   readonly isActive: Prisma.FieldRef<"User", 'Boolean'>
   readonly isVerified: Prisma.FieldRef<"User", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
@@ -1941,9 +3535,119 @@ export type User$accountsArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 }
 
 /**
- * User.sentNotifications
+ * User.ownedBusinesses
  */
-export type User$sentNotificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$ownedBusinessesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Business
+   */
+  select?: Prisma.BusinessSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Business
+   */
+  omit?: Prisma.BusinessOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BusinessInclude<ExtArgs> | null
+  where?: Prisma.BusinessWhereInput
+  orderBy?: Prisma.BusinessOrderByWithRelationInput | Prisma.BusinessOrderByWithRelationInput[]
+  cursor?: Prisma.BusinessWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.BusinessScalarFieldEnum | Prisma.BusinessScalarFieldEnum[]
+}
+
+/**
+ * User.staffRoles
+ */
+export type User$staffRolesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the BusinessStaff
+   */
+  select?: Prisma.BusinessStaffSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the BusinessStaff
+   */
+  omit?: Prisma.BusinessStaffOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BusinessStaffInclude<ExtArgs> | null
+  where?: Prisma.BusinessStaffWhereInput
+  orderBy?: Prisma.BusinessStaffOrderByWithRelationInput | Prisma.BusinessStaffOrderByWithRelationInput[]
+  cursor?: Prisma.BusinessStaffWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.BusinessStaffScalarFieldEnum | Prisma.BusinessStaffScalarFieldEnum[]
+}
+
+/**
+ * User.sentMessages
+ */
+export type User$sentMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ChatMessage
+   */
+  select?: Prisma.ChatMessageSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ChatMessage
+   */
+  omit?: Prisma.ChatMessageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ChatMessageInclude<ExtArgs> | null
+  where?: Prisma.ChatMessageWhereInput
+  orderBy?: Prisma.ChatMessageOrderByWithRelationInput | Prisma.ChatMessageOrderByWithRelationInput[]
+  cursor?: Prisma.ChatMessageWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ChatMessageScalarFieldEnum | Prisma.ChatMessageScalarFieldEnum[]
+}
+
+/**
+ * User.memberProfile
+ */
+export type User$memberProfileArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MemberProfile
+   */
+  select?: Prisma.MemberProfileSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MemberProfile
+   */
+  omit?: Prisma.MemberProfileOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MemberProfileInclude<ExtArgs> | null
+  where?: Prisma.MemberProfileWhereInput
+}
+
+/**
+ * User.trainerProfile
+ */
+export type User$trainerProfileArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TrainerProfile
+   */
+  select?: Prisma.TrainerProfileSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TrainerProfile
+   */
+  omit?: Prisma.TrainerProfileOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TrainerProfileInclude<ExtArgs> | null
+  where?: Prisma.TrainerProfileWhereInput
+}
+
+/**
+ * User.notifications
+ */
+export type User$notificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Notification
    */
@@ -1965,27 +3669,147 @@ export type User$sentNotificationsArgs<ExtArgs extends runtime.Types.Extensions.
 }
 
 /**
- * User.receivedNotifications
+ * User.payments
  */
-export type User$receivedNotificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$paymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Notification
+   * Select specific fields to fetch from the Payment
    */
-  select?: Prisma.NotificationSelect<ExtArgs> | null
+  select?: Prisma.PaymentSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Notification
+   * Omit specific fields from the Payment
    */
-  omit?: Prisma.NotificationOmit<ExtArgs> | null
+  omit?: Prisma.PaymentOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.NotificationInclude<ExtArgs> | null
-  where?: Prisma.NotificationWhereInput
-  orderBy?: Prisma.NotificationOrderByWithRelationInput | Prisma.NotificationOrderByWithRelationInput[]
-  cursor?: Prisma.NotificationWhereUniqueInput
+  include?: Prisma.PaymentInclude<ExtArgs> | null
+  where?: Prisma.PaymentWhereInput
+  orderBy?: Prisma.PaymentOrderByWithRelationInput | Prisma.PaymentOrderByWithRelationInput[]
+  cursor?: Prisma.PaymentWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.NotificationScalarFieldEnum | Prisma.NotificationScalarFieldEnum[]
+  distinct?: Prisma.PaymentScalarFieldEnum | Prisma.PaymentScalarFieldEnum[]
+}
+
+/**
+ * User.progressLogs
+ */
+export type User$progressLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProgressLog
+   */
+  select?: Prisma.ProgressLogSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProgressLog
+   */
+  omit?: Prisma.ProgressLogOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProgressLogInclude<ExtArgs> | null
+  where?: Prisma.ProgressLogWhereInput
+  orderBy?: Prisma.ProgressLogOrderByWithRelationInput | Prisma.ProgressLogOrderByWithRelationInput[]
+  cursor?: Prisma.ProgressLogWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ProgressLogScalarFieldEnum | Prisma.ProgressLogScalarFieldEnum[]
+}
+
+/**
+ * User.attendances
+ */
+export type User$attendancesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Attendance
+   */
+  select?: Prisma.AttendanceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Attendance
+   */
+  omit?: Prisma.AttendanceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AttendanceInclude<ExtArgs> | null
+  where?: Prisma.AttendanceWhereInput
+  orderBy?: Prisma.AttendanceOrderByWithRelationInput | Prisma.AttendanceOrderByWithRelationInput[]
+  cursor?: Prisma.AttendanceWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AttendanceScalarFieldEnum | Prisma.AttendanceScalarFieldEnum[]
+}
+
+/**
+ * User.adminReviewedCertifications
+ */
+export type User$adminReviewedCertificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TrainerCertification
+   */
+  select?: Prisma.TrainerCertificationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TrainerCertification
+   */
+  omit?: Prisma.TrainerCertificationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TrainerCertificationInclude<ExtArgs> | null
+  where?: Prisma.TrainerCertificationWhereInput
+  orderBy?: Prisma.TrainerCertificationOrderByWithRelationInput | Prisma.TrainerCertificationOrderByWithRelationInput[]
+  cursor?: Prisma.TrainerCertificationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TrainerCertificationScalarFieldEnum | Prisma.TrainerCertificationScalarFieldEnum[]
+}
+
+/**
+ * User.referredMembers
+ */
+export type User$referredMembersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MemberReferral
+   */
+  select?: Prisma.MemberReferralSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MemberReferral
+   */
+  omit?: Prisma.MemberReferralOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MemberReferralInclude<ExtArgs> | null
+  where?: Prisma.MemberReferralWhereInput
+  orderBy?: Prisma.MemberReferralOrderByWithRelationInput | Prisma.MemberReferralOrderByWithRelationInput[]
+  cursor?: Prisma.MemberReferralWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MemberReferralScalarFieldEnum | Prisma.MemberReferralScalarFieldEnum[]
+}
+
+/**
+ * User.businessReferrals
+ */
+export type User$businessReferralsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the BusinessReferral
+   */
+  select?: Prisma.BusinessReferralSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the BusinessReferral
+   */
+  omit?: Prisma.BusinessReferralOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BusinessReferralInclude<ExtArgs> | null
+  where?: Prisma.BusinessReferralWhereInput
+  orderBy?: Prisma.BusinessReferralOrderByWithRelationInput | Prisma.BusinessReferralOrderByWithRelationInput[]
+  cursor?: Prisma.BusinessReferralWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.BusinessReferralScalarFieldEnum | Prisma.BusinessReferralScalarFieldEnum[]
 }
 
 /**

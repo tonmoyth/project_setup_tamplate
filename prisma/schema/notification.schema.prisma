@@ -1,25 +1,24 @@
 model Notification {
-  id            String @id @default(uuid())
+  id String @id @default(uuid())
 
-  senderId      String?
-  receiverId    String
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  title         String
-  body          String
+  type NotificationType
 
-  type          NotificationType
+  title String
+  body  String
 
-  isRead        Boolean @default(false)
+  metadata Json?
 
-  videoId       String?
-  storyId       String?
+  isRead Boolean @default(false)
 
-  sender        User? @relation("SenderNotifications", fields: [senderId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
 
-  receiver      User @relation("ReceiverNotifications", fields: [receiverId], references: [id], onDelete: Cascade)
-
-  createdAt     DateTime @default(now())
-
-  @@index([receiverId])
+  @@index([userId])
+  @@index([type])
+  @@index([isRead])
   @@index([createdAt])
+  @@index([userId, isRead])
+  @@index([userId, createdAt])
 }

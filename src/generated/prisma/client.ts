@@ -27,8 +27,8 @@ export * from "./enums"
  * @example
  * ```
  * const prisma = new PrismaClient()
- * // Fetch zero or more Notifications
- * const notifications = await prisma.notification.findMany()
+ * // Fetch zero or more Announcements
+ * const announcements = await prisma.announcement.findMany()
  * ```
  * 
  * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
@@ -43,10 +43,165 @@ path.join(__dirname, "query_engine-windows.dll.node")
 path.join(process.cwd(), "src/generated/prisma/query_engine-windows.dll.node")
 
 /**
+ * Model Announcement
+ * 
+ */
+export type Announcement = Prisma.AnnouncementModel
+/**
+ * Model Attendance
+ * 
+ */
+export type Attendance = Prisma.AttendanceModel
+/**
+ * Model Business
+ * 
+ */
+export type Business = Prisma.BusinessModel
+/**
+ * Model BusinessReferral
+ * 
+ */
+export type BusinessReferral = Prisma.BusinessReferralModel
+/**
+ * Model BusinessStaff
+ * 
+ */
+export type BusinessStaff = Prisma.BusinessStaffModel
+/**
+ * Model ChatMessage
+ * 
+ */
+export type ChatMessage = Prisma.ChatMessageModel
+/**
+ * Model ChatThread
+ * 
+ */
+export type ChatThread = Prisma.ChatThreadModel
+/**
+ * Model ClassBooking
+ * 
+ */
+export type ClassBooking = Prisma.ClassBookingModel
+/**
+ * Model ClassSchedule
+ * 
+ */
+export type ClassSchedule = Prisma.ClassScheduleModel
+/**
+ * Model DietPlan
+ * 
+ */
+export type DietPlan = Prisma.DietPlanModel
+/**
+ * Model Equipment
+ * 
+ */
+export type Equipment = Prisma.EquipmentModel
+/**
+ * Model Favorite
+ * 
+ */
+export type Favorite = Prisma.FavoriteModel
+/**
+ * Model Invoice
+ * 
+ */
+export type Invoice = Prisma.InvoiceModel
+/**
+ * Model JobPost
+ * 
+ */
+export type JobPost = Prisma.JobPostModel
+/**
+ * Model MemberProfile
+ * 
+ */
+export type MemberProfile = Prisma.MemberProfileModel
+/**
+ * Model MemberReferral
+ * 
+ */
+export type MemberReferral = Prisma.MemberReferralModel
+/**
+ * Model MemberReferralSetting
+ * 
+ */
+export type MemberReferralSetting = Prisma.MemberReferralSettingModel
+/**
+ * Model Membership
+ * 
+ */
+export type Membership = Prisma.MembershipModel
+/**
+ * Model MembershipPlan
+ * 
+ */
+export type MembershipPlan = Prisma.MembershipPlanModel
+/**
  * Model Notification
  * 
  */
 export type Notification = Prisma.NotificationModel
+/**
+ * Model Payment
+ * 
+ */
+export type Payment = Prisma.PaymentModel
+/**
+ * Model PlatformSubscription
+ * 
+ */
+export type PlatformSubscription = Prisma.PlatformSubscriptionModel
+/**
+ * Model ProgressLog
+ * 
+ */
+export type ProgressLog = Prisma.ProgressLogModel
+/**
+ * Model AttendanceQrCode
+ * 
+ */
+export type AttendanceQrCode = Prisma.AttendanceQrCodeModel
+/**
+ * Model Review
+ * 
+ */
+export type Review = Prisma.ReviewModel
+/**
+ * Model SpecializationTag
+ * 
+ */
+export type SpecializationTag = Prisma.SpecializationTagModel
+/**
+ * Model TrainerApplication
+ * 
+ */
+export type TrainerApplication = Prisma.TrainerApplicationModel
+/**
+ * Model TrainerBusiness
+ * 
+ */
+export type TrainerBusiness = Prisma.TrainerBusinessModel
+/**
+ * Model TrainerCertification
+ * 
+ */
+export type TrainerCertification = Prisma.TrainerCertificationModel
+/**
+ * Model TrainerPayout
+ * 
+ */
+export type TrainerPayout = Prisma.TrainerPayoutModel
+/**
+ * Model TrainerProfile
+ * 
+ */
+export type TrainerProfile = Prisma.TrainerProfileModel
+/**
+ * Model TrainerSpecialization
+ * 
+ */
+export type TrainerSpecialization = Prisma.TrainerSpecializationModel
 /**
  * Model User
  * 

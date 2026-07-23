@@ -7,11 +7,7 @@ import { updateProfileSchema } from "../Auth/auth.validation";
 
 const router = express.Router();
 
-router.get(
-    "/me",
-    checkAuth(),
-    userController.getProfile
-);
+router.get("/me", checkAuth(), userController.getProfile);
 
 router.patch(
     "/me",
@@ -26,8 +22,5 @@ router.patch(
     validateRequest(updateProfileSchema),
     userController.updateProfile
 );
-
-
-
 
 export const userRoutes = router;
